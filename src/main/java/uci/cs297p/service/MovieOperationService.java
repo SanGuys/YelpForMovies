@@ -6,15 +6,26 @@ import uci.cs297p.model.Movie;
 import uci.cs297p.model.MovieMapper;
 import uci.cs297p.model.MovieRecordForm;
 
+import java.util.List;
+
 @Service
-public class EditMovieRecordService {
+public class MovieOperationService {
     @Autowired
     private MovieMapper movieMapper;
+
+    public List<Movie> searchMovie(String keyWords){
+        List<Movie> movieList = movieMapper.selectBySearch(keyWords);
+        return movieList;
+    }
 
     public void addMovie(MovieRecordForm movieRecordForm) {
         // public Movie(Integer id, String name, Integer year, String introduction, String picturePath, Date createTime, Date updateTime, byte[] pictureContent) {
         Movie movie = new Movie(null, movieRecordForm.getName(), movieRecordForm.getYear(), movieRecordForm.getIntroduction(),
                 movieRecordForm.getPicturePath(), null, null, movieRecordForm.getPictureContent().getBytes());
         movieMapper.insertSelective(movie);
+    }
+
+    public void deleteMovie(Integer ID){
+        movieMapper.deleteByPrimaryKey(ID);
     }
 }

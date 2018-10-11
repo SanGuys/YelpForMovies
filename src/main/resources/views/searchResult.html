@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>SearchResult</title>
 </head>
 <body>
-$END$
+<h1 align="center">SearchResult</h1>
+<table align="center" id="contentTable" class="table" border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>name</th>
+        <th>year</th>
+        <th>introduction</th>
+        <th>picture_path</th>
+        <th>picture_content</th>
+        <th>create_time</th>
+        <th>update_time</th>
+        <th>EDIT</th>
+        <th>DELETE</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="movie : ${movieList}" >
+            <td th:text="${movie.id}"></td>
+            <td th:text="${movie.name}"></td>
+            <td th:text="${movie.year}"></td>
+            <td th:text="${movie.introduction}"></td>
+            <td th:text="${movie.picturePath}"></td>
+            <td th:text="${movie.pictureContent}"></td>
+            <td th:text="${movie.createTime}"></td>
+            <td th:text="${movie.updateTime}"></td>
+            <td><input id="btnEdit" class="button" type="button" value="EDIT"
+                       onclick=""/>
+            </td>
+            <td><a th:href="@{'/deleteMovie?ID='+${movie.id}}"
+                   style="color:red">DELETE</a></td>
+        </tr>
+    </tbody>
+</table>
 </body>
 </html>

@@ -1,9 +1,9 @@
-package uci.cs297p.proj.controller;
+package uci.cs297p.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uci.cs297p.proj.model.Article;
+import uci.cs297p.model.Article;
 
 import java.util.ArrayList;
 

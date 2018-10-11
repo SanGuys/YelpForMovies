@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Homepage</title>
+
 </head>
 <body>
-$END$
+    <h1 style="text-align:center;">Homepage</h1>
+    <form align="center" action="/searchMovie" method="post">
+        <input type="text" name="keyWords" />
+        <button>Search</button>
+    </form>
+    <p align="center">
+        <a href="/addMovie">
+            <button>addMovie</button>
+        </a>
+    <p/>
 </body>
 </html>

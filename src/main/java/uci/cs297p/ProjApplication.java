@@ -1,4 +1,4 @@
-package uci.cs297p.proj;
+package uci.cs297p;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

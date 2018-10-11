@@ -1,4 +1,4 @@
-package uci.cs297p.proj.model;
+package uci.cs297p.model;
 
 import lombok.Data;
 

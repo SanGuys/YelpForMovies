@@ -2,6 +2,7 @@ package uci.cs297p.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uci.cs297p.model.Movie;
@@ -11,7 +12,7 @@ import uci.cs297p.service.MovieOperationService;
 import java.util.List;
 
 @Controller
-public class EditMovieRecordController {
+public class MovieOperationController {
     @Autowired
     private MovieOperationService movieOperationService;
 
@@ -21,8 +22,10 @@ public class EditMovieRecordController {
     }
 
     @RequestMapping("/searchMovie")
-    public String searchMovie(String keyWords){
+    public String searchMovie(String keyWords, Model model){
         List<Movie> movieList = movieOperationService.searchMovie(keyWords);
+        model.addAttribute("movieList", movieList);
+        return "searchResult";
     }
 
     @RequestMapping("/addMovie")
@@ -34,7 +37,14 @@ public class EditMovieRecordController {
     @ResponseBody
     public String addMovieSubmit(MovieRecordForm movieRecordForm) {
         movieOperationService.addMovie(movieRecordForm);
-        return "Success! \n" + movieRecordForm.toString();
+        return "Successfully Added! \n" + movieRecordForm.toString();
+    }
+
+    @RequestMapping("/deleteMovie")
+    @ResponseBody
+    public String deleteMovie(Integer ID){
+        movieOperationService.deleteMovie(ID);
+        return "Successfully Deleted! \n" + ID;
     }
 
 }

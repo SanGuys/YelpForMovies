@@ -1,11 +1,11 @@
-package uci.cs297p.proj;
+package uci.cs297p;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import uci.cs297p.proj.model.MovieMapper;
+import uci.cs297p.model.MovieMapper;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
