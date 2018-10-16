@@ -1,20 +1,139 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Homepage</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>HomePage</title>
 </head>
 <body>
-    <h1 style="text-align:center;">Homepage</h1>
-    <form align="center" action="/searchMovie" method="post">
-        <input type="text" name="keyWords" />
-        <button>Search</button>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
+                <li class="nav-item"><a class="nav-link" href="https://project.example.com/signin/">Sign in</a></li>
+                <li class="nav-item"><a class="nav-link" href="https://project.example.com/my-account/">Sign up</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav d-lg-none">
+                <li class="nav-item-divider"></li>
+                <li class="nav-item"><a class="nav-link" href="https://project.example.com/signin/">Sign in</a></li>
+                <li class=" nav-item"><a class="nav-link" href="https://project.example.com/my-account/">Sign up</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="container" style="padding-top: 50px">
+    <form class="form" action="/searchMovie" method="post">
+        <div class="input-group">
+            <label for="keyWords"></label>
+            <input type="text" class="form-control mr-sm-5" placeholder="" id="keyWords" name="keyWords">
+            <span class="input-group-btn">
+                <label for="searchButton"></label>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchButton">Search</button>
+            </span>
+        </div>
     </form>
-    <p align="center">
-        <a href="/addMovie">
-            <button>addMovie</button>
-        </a>
-    <p/>
+</div>
+
+<div class="container" style="padding-top: 50px">
+    <a href="/addMovie" class="btn btn-primary btn-block">Add Movie</a>
+</div>
+
+<div class="container" style="padding-top: 50px">
+    <div class="row">
+        <div class="col-md-4 movie-profile">
+            <div class="movie-profile-pic">
+                <img src="#" alt="movie-profile-pic">
+            </div>
+            <p class="movie-profile-name">Movie Name</p>
+            <p class="movie-profile-intro">Movie Intro</p>
+        </div>
+        <div class="col-md-4 movie-profile">
+            <div class="movie-profile-pic">
+                <img src="#" alt="movie-profile-pic">
+            </div>
+            <p class="movie-profile-name">Movie Name</p>
+            <p class="movie-profile-intro">Movie Intro</p>
+        </div>
+        <div class="col-md-4 movie-profile">
+            <div class="movie-profile-pic">
+                <img src="#" alt="movie-profile-pic">
+            </div>
+            <p class="movie-profile-name">Movie Name</p>
+            <p class="movie-profile-intro">Movie Intro</p>
+        </div>
+        <div class="col-md-4 movie-profile">
+            <div class="movie-profile-pic">
+                <img src="#" alt="movie-profile-pic">
+            </div>
+            <p class="movie-profile-name">Movie Name</p>
+            <p class="movie-profile-intro">Movie Intro</p>
+        </div>
+        <div class="col-md-4 movie-profile">
+            <div class="movie-profile-pic">
+                <img src="#" alt="movie-profile-pic">
+            </div>
+            <p class="movie-profile-name">Movie Name</p>
+            <p class="movie-profile-intro">Movie Intro</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <hr>
+    <footer>
+        <p>&copy; 2018 SanGuys Team</p>
+    </footer>
+</div> <!-- /container -->
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 </body>
 </html>
