@@ -2,17 +2,44 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>AddMovie</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <title>Let's add a movie!</title>
 </head>
 <body>
-    <h1 align="center">AddMovie</h1>
-    <form align="center" action="/addMovieSubmit" method="post" th:object="${moviesRecordForm}">
-        <p>Movie Name: <input type="text" name="name"/></p>
-        <p>Release year: <input type="text" name="year"/></p>
-        <p>Introduction: <input height=20px type="text" name="introduction"/></p>
-        <p>Picture URL: <input type="text" name="picturePath"/></p>
-        <p>Picture File: <input type="text" name="pictureContent"/></p>
-        <input type="submit" value="Submit"/>
-    </form>
+    <div style="width: 30%; margin: 25px auto;">
+        <h1 align="center">Let's add a movie!</h1>
+        <form align="center" action="/addMovieSubmit" method="post" th:object="${moviesRecordForm}">
+            <div class="form-group">
+                <input class="form-control" type="text" name="name" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="year" placeholder="Year">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="introduction" placeholder="Introduction">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="picturePath" placeholder="Picture Path">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="pictureContent" placeholder="Picture Content">
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-lg btn-default btn-primary btn-block">Submit!</button>
+            </div>
+
+            <a href="/">Go back</a>
+
+            <!--
+            <p>Movie Name: <input type="text" name="name"/></p>
+            <p>Release year: <input type="text" name="year"/></p>
+            <p>Introduction: <input height=20px type="text" name="introduction"/></p>
+            <p>Picture URL: <input type="text" name="picturePath"/></p>
+            <p>Picture File: <input type="text" name="pictureContent"/></p>
+            <input type="submit" value="Submit"/>
+            -->
+        </form>
+    </div>
 </body>
 </html>
