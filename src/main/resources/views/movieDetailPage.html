@@ -7,23 +7,23 @@
     <title>Movie Detail</title>
 </head>
 <body>
-    <div style="width: 30%; margin: 25px auto;">
-        <h1 align="center">Movie Detail</h1>
-        <tr th:each="movie : ${movieList}" >
-            <td th:text="${movie.id}"></td>
-            <td th:text="${movie.name}"></td>
-            <td th:text="${movie.year}"></td>
-            <td th:text="${movie.introduction}"></td>
-            <td th:text="${movie.picturePath}"></td>
-            <td th:text="${movie.pictureContent}"></td>
-            <td th:text="${movie.createTime}"></td>
-            <td th:text="${movie.updateTime}"></td>
-            <td><input id="btnEdit" class="button" type="button" value="EDIT"
-                       onclick=""/>
-            </td>
-            <td><a th:href="@{'/deleteMovie?ID='+${movie.id}}"
-                   style="color:red">DELETE</a></td>
-        </tr>
-    </div>
+    <!--<div style="width: 30%; margin: 25px auto;">-->
+        <!--<h1 align="center">Movie Detail</h1>-->
+        <!--<tr th:each="movie : ${movieList}" >-->
+            <!--<td th:text="${movie.id}"></td>-->
+            <!--<td th:text="${movie.name}"></td>-->
+            <!--<td th:text="${movie.year}"></td>-->
+            <!--<td th:text="${movie.introduction}"></td>-->
+            <!--<td th:text="${movie.picturePath}"></td>-->
+            <!--<td th:text="${movie.pictureContent}"></td>-->
+            <!--<td th:text="${movie.createTime}"></td>-->
+            <!--<td th:text="${movie.updateTime}"></td>-->
+            <!--<td><input id="btnEdit" class="button" type="button" value="EDIT"-->
+                       <!--onclick=""/>-->
+            <!--</td>-->
+            <!--<td><a th:href="@{'/deleteMovie?ID='+${movie.id}}"-->
+                   <!--style="color:red">DELETE</a></td>-->
+        <!--</tr>-->
+    <!--</div>-->
 </body>
 </html>
