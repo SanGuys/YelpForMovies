@@ -28,4 +28,9 @@ public class MovieOperationService {
     public void deleteMovie(Integer ID){
         movieMapper.deleteByPrimaryKey(ID);
     }
+
+    public Movie getMovie(Integer ID) {
+        Movie movie = movieMapper.selectByPrimaryKey(ID);
+        return movie;
+    }
 }

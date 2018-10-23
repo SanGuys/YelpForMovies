@@ -49,4 +49,10 @@ public class MovieOperationController {
         return "Successfully Deleted! \n" + ID;
     }
 
+    @RequestMapping("/movieDetailPage")
+    public String movieDetailPage(){
+//        Movie movie = movieOperationService.getMovie(ID);
+//        model.addAttribute("movieList", movieList);
+        return "movieDetailPage";
+    }
 }
