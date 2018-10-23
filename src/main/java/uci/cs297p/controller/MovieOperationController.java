@@ -17,7 +17,9 @@ public class MovieOperationController {
     private MovieOperationService movieOperationService;
 
     @RequestMapping("/")
-    public String homepage(){
+    public String homepage(Model model){
+        List<Movie> movieList = movieOperationService.searchMovie("");
+        model.addAttribute("movieList", movieList);
         return "homepage";
     }
 

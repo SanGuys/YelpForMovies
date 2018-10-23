@@ -81,8 +81,8 @@
 <div class="container" style="padding-top: 50px">
     <div class="row">
         <div class="col-md-4 movie-profile"  th:each="movie : ${movieList}">
-            <div class="movie-profile-pic" th:text="${movie.pictureContent}">
-                <!--<img src="#" alt="movie-profile-pic">-->
+            <div class="movie-profile-pic">
+                <img th:src="${movie.picturePath}" width="100%" height="100%" alt="movie-profile-pic"/>
             </div>
             <p class="movie-profile-name"><a th:href="@{'/showMovieDetail?ID='+${movie.id}}" th:text="${movie.name}"></a></p>
             <p class="movie-profile-intro" th:text="${movie.introduction}"></p>
