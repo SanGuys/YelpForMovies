@@ -87,7 +87,7 @@
         </thead>
         <tbody>
         <tr th:each="movie : ${movieList}">
-            <th scope="row"><a th:href="@{'/showMovieDetail?ID='+${movie.id}}" th:text="${movie.name}"></a></td>
+            <th scope="row"><a th:href="@{'/movieDetailPage?ID='+${movie.id}}" th:text="${movie.name}"></a></td>
             <td th:text="${movie.year}"></td>
             <td th:text="${movie.introduction}"></td>
             <td>
