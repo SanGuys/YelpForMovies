@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <title>Movie Detail</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">YelpForMovies</p>
+            <div class="list-group">
+                <li class="list-group-item active">Science Fiction</li>
+                <li class="list-group-item">Romantic</li>
+                <li class="list-group-item">Animation</li>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="https://upload.wikimedia.org/wikipedia/en/4/4d/Avengers_Infinity_War_poster.jpg">
+                <div class="caption-full">
+                    <!--<h4 class="pull-right">$<%= campground.price %>/night</h4>-->
+                    <h4><a>Avengers: Infinity War</a></h4>
+                    <p>Avengers: Infinity War is a 2018 American superhero film based on the Marvel Comics superhero team the Avengers, produced by Marvel Studios and distributed by Walt Disney Studios Motion Pictures. It is the sequel to 2012's The Avengers and 2015's Avengers: Age of Ultron, and the nineteenth film in the Marvel Cinematic Universe (MCU). The film is directed by Anthony and Joe Russo, written by Christopher Markus and Stephen McFeely, and features an ensemble cast including Robert Downey Jr., Chris Hemsworth, Mark Ruffalo, Chris Evans, Scarlett Johansson, Benedict Cumberbatch, Don Cheadle, Tom Holland, Chadwick Boseman, Paul Bettany, Elizabeth Olsen, Anthony Mackie, Sebastian Stan, Danai Gurira, Letitia Wright, Dave Bautista, Zoe Saldana, Josh Brolin, and Chris Pratt. In the film, the Avengers and the Guardians of the Galaxy attempt to stop Thanos from amassing the all-powerful Infinity Stones.</p>
+                    <!--<p>-->
+                        <!--<em>Submitted by <%= campground.author.username %></em>-->
+                    <!--</p>-->
+                    <!--<a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>-->
+                    <!--<form class="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">-->
+                        <!--<button class="btn btn-danger">Delete</button>-->
+                    <!--</form>-->
+                    <!--<td><a th:href="@{'/editMovie?ID='+${movie.id}}" style="color:cornflowerblue">EDIT</a></td>-->
+                    <!--<td><a th:href="@{'/deleteMovie?ID='+${movie.id}}" style="color:red">DELETE</a></td>-->
+                </div>
+            </div>
+            <div class="well">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add new comment</a>
+                </div>
+                <hr>
+                <!--<% campground.comments.forEach(function(comment) {%>-->
+                <!--<div class="row">-->
+                    <!--<div class="col-md-12">-->
+                        <!--<strong><%= comment.author.username %></strong>-->
+                        <!--<span class="pull-right">10 days ago</span>-->
+                        <!--<p>-->
+                            <!--<%= comment.text %>-->
+                        <!--</p>-->
+
+                        <!--<% if(currentUser && comment.author.id.equals(currentUser._id)){ %>-->
+                        <!--<a class="btn btn-xs btn-warning"-->
+                           <!--href="/campgrounds/<%= campground._id%>/comments/<%= comment._id %>/edit">-->
+                            <!--Edit-->
+                        <!--</a>-->
+                        <!--<form class="delete-form" action="/campgrounds/<%= campground._id%>/comments/<%= comment._id %>?_method=DELETE" method="POST">-->
+                            <!--<input type="submit" class="btn btn-xs btn-danger" value="Delete">-->
+                        <!--</form>-->
+                        <!--<% } %>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<% }) %>-->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -3,8 +3,7 @@ package uci.cs297p.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import uci.cs297p.model.Movie;
 import uci.cs297p.model.MovieRecordForm;
 import uci.cs297p.service.MovieOperationService;
@@ -50,9 +49,10 @@ public class MovieOperationController {
     }
 
     @RequestMapping("/movieDetailPage")
-    public String movieDetailPage(Integer ID, Model model){
-        Movie movie = movieOperationService.getMovie(ID);
+    public String movieDetailPage(@RequestParam("ID") Integer id, Model model){
+        Movie movie = movieOperationService.getMovie(id);
         model.addAttribute("movie", movie);
         return "movieDetailPage";
     }
+
 }
