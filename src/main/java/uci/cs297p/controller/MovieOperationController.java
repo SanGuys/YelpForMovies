@@ -50,9 +50,9 @@ public class MovieOperationController {
     }
 
     @RequestMapping("/movieDetailPage")
-    public String movieDetailPage(){
-//        Movie movie = movieOperationService.getMovie(ID);
-//        model.addAttribute("movieList", movieList);
+    public String movieDetailPage(Integer ID, Model model){
+        Movie movie = movieOperationService.getMovie(ID);
+        model.addAttribute("movie", movie);
         return "movieDetailPage";
     }
 }

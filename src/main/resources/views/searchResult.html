@@ -80,7 +80,7 @@
             <th style="width:20%">name</th>
             <th style="width:10%">year</th>
             <th style="width:30%">introduction</th>
-            <th style="width:20%">picture_content</th>
+            <th style="width:20%">picture cover</th>
             <th style="width:10%">EDIT</th>
             <th style="width:10%">DELETE</th>
         </tr>
@@ -90,7 +90,11 @@
             <th scope="row"><a th:href="@{'/showMovieDetail?ID='+${movie.id}}" th:text="${movie.name}"></a></td>
             <td th:text="${movie.year}"></td>
             <td th:text="${movie.introduction}"></td>
-            <td th:text="${movie.pictureContent}"></td>
+            <td>
+                <div>
+                    <img th:src="${movie.picturePath}" width="100%" height="100%" alt="movie-profile-pic"/>
+                </div>
+            </td>
             <td><a th:href="@{'/editMovie?ID='+${movie.id}}" style="color:cornflowerblue">EDIT</a></td>
             <td><a th:href="@{'/deleteMovie?ID='+${movie.id}}" style="color:red">DELETE</a></td>
         </tr>
