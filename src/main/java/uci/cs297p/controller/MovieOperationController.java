@@ -55,4 +55,18 @@ public class MovieOperationController {
         return "movieDetailPage";
     }
 
+    @RequestMapping("/editMovie")
+    public String editMovie(@RequestParam("ID") Integer id, Model model){
+        Movie movie = movieOperationService.getMovie(id);
+        model.addAttribute("movie", movie);
+        return "editMovie";
+    }
+
+    @RequestMapping("/editMovieSubmit")
+    @ResponseBody
+    public String editMovieSubmit(MovieRecordForm movieRecordForm) {
+        movieOperationService.addMovie(movieRecordForm);
+        return "Successfully Edited! \n" + movieRecordForm.toString();
+    }
+
 }

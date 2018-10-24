@@ -24,9 +24,9 @@
                 <div class="caption-full">
                     <h4><a th:text="${movie.name}"></a></h4>
                     <p th:text="${movie.introduction}"></p>
-                    <a class="btn btn-warning" th:href="@{'/editMovie?ID='+${movie.id}}">
-                        Edit
-                    </a>
+                    <!--<a class="btn btn-warning" th:href="@{'/editMovie?ID='+${movie.id}}">-->
+                        <!--Edit-->
+                    <!--</a>-->
                     <form class="delete-form" th:action="@{'/deleteMovie?ID='+${movie.id}}" method="POST">
                         <button class="btn btn-danger">Delete</button>
                     </form>
