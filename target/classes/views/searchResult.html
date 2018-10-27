@@ -8,8 +8,35 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <link rel="stylesheet" type="text/css" href="./css/theme.css">
     <title>SearchResult</title>
+    <style type="text/css">
+
+        .movie-profile {
+            height: 300px;
+        }
+
+        .movie-profile-intro {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 12;
+            -webkit-box-orient: vertical;
+        }
+
+        .movie-profile-pic-box {
+            height: 300px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .movie-profile-pic {
+            max-width: 100%;
+            max-height: 100%;
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body>
 <!--<div id="header" style="height: 56px;"></div>-->
@@ -77,31 +104,35 @@
     <table id="contentTable" class="table table-hover table-nonfluid" style="text-align: center;">
         <thead class="thead-dark">
         <tr>
+            <th style="width:20%">picture cover</th>
             <th style="width:20%">name</th>
             <th style="width:10%">year</th>
             <th style="width:30%">introduction</th>
-            <th style="width:20%">picture cover</th>
+
             <th style="width:10%">EDIT</th>
             <th style="width:10%">DELETE</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="movie : ${movieList}">
-            <th scope="row"><a th:href="@{'/movieDetailPage?ID='+${movie.id}}" th:text="${movie.name}"></a></td>
-            <td th:text="${movie.year}"></td>
-            <td th:text="${movie.introduction}"></td>
+        <tr class="movie-profile" th:each="movie : ${movieList}">
             <td>
-                <div>
-                    <img th:src="${movie.picturePath}" width="100%" height="100%" alt="movie-profile-pic"/>
+                <div class="movie-profile-pic-box">
+                    <a th:href="@{'/movieDetailPage?ID='+${movie.id}}">
+                        <img class="movie-profile-pic" th:src="${movie.picturePath}" alt="movie-profile-pic"/>
+                    </a>
                 </div>
             </td>
+            <th scope="row"><a th:href="@{'/movieDetailPage?ID='+${movie.id}}" th:text="${movie.name}"></a>
+            </td>
+            <td th:text="${movie.year}"></td>
+            <td class="movie-profile-intro" th:text="${movie.introduction}"></td>
+
             <td><a th:href="@{'/editMovie?ID='+${movie.id}}" style="color:cornflowerblue">EDIT</a></td>
             <td><a th:href="@{'/deleteMovie?ID='+${movie.id}}" style="color:red">DELETE</a></td>
         </tr>
         </tbody>
     </table>
 </div>
-
 
 
 <!-- Optional JavaScript -->
@@ -117,10 +148,10 @@
         crossorigin="anonymous"></script>
 
 <!--<script>-->
-    <!--$(function () {-->
-        <!--$("#header").load("./header.html");-->
-        <!--// $("#footer").load("footer.html");-->
-    <!--});-->
+<!--$(function () {-->
+<!--$("#header").load("./header.html");-->
+<!--// $("#footer").load("footer.html");-->
+<!--});-->
 <!--</script>-->
 </body>
 </html>
