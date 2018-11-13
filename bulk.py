@@ -11,6 +11,12 @@ import urllib.request
 import csv
 
 
+def validTid(tid):
+    if tid.startswith("tt") and len(tid) == 9:
+        return True
+    else:
+        return False
+
 def getInfo(tid):
     url = "https://www.imdb.com/title/" + tid
     f = urllib.request.urlopen(url)
@@ -39,19 +45,40 @@ def getInfo(tid):
     sumstart = source.find("\\n", sumstart) + 2
     sumend = source.find("\\n", sumstart)
     sumtext = source[sumstart: sumend].strip().replace("\\", "")
-
-    return realname, year, sumtext, imgurl
+    
+    # get rating
+    ratingstart = source.find("ratingValue")
+    ratingstart = ratingstart + 15
+    ratingend = ratingstart + 3
+    rating = source[ratingstart: ratingend]
+    if rating == "\\n\\":
+        rating = "0.0"
+    
+    return realname, year, sumtext, imgurl, rating
 
 
 tids = "tids.csv"
 movies = "Movies.csv"
+
+# create a set to detect duplicate
+l = []
+
 with open(tids) as r, open(movies, 'w', newline = '') as w:
     reader = csv.reader(r)
     writer = csv.writer(w, dialect='excel')
-    writer.writerow(['id', 'name', 'year', 'introduction', 'picture_path'])
+    writer.writerow(['id', 'name', 'year', 'introduction', 'picture_path', 'rating', 'rating_number'])
     for row in reader:
         tid = str(row[0])
-        print(tid)
-        realname, year, sumtext, imgurl = getInfo(tid)
-        l = [tid, realname, year, sumtext, imgurl]
+        #print(tid)
+        if not validTid(tid):
+            print(tid + " is invalid tid")
+            continue
+        if tid in l:
+            print(tid + " is duplicate and will not be processed")
+            continue
+        else:
+            l.append(tid)
+            print(tid + " success")
+        realname, year, sumtext, imgurl, rating = getInfo(tid)
+        l = [tid, realname, year, sumtext, imgurl, rating, '1']
         writer.writerow(l)
