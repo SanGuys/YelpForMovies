@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class MovieRecordForm {
+    int id;
     String name;
     int year;
     String introduction;
@@ -13,6 +14,7 @@ public class MovieRecordForm {
     @Override
     public String toString() {
         return "MovieRecordForm{" +
+                "id='" + id + '\'' +
                 "name='" + name + '\'' +
                 ", year=" + year +
                 ", introduction='" + introduction + '\'' +

@@ -27,9 +27,9 @@ public class MovieOperationService {
 
     public void editMovie(MovieRecordForm movieRecordForm) {
         // public Movie(Integer id, String name, Integer year, String introduction, String picturePath, Date createTime, Date updateTime, byte[] pictureContent) {
-        Movie movie = new Movie(null, movieRecordForm.getName(), movieRecordForm.getYear(), movieRecordForm.getIntroduction(),
+        Movie movie = new Movie(movieRecordForm.getId(), movieRecordForm.getName(), movieRecordForm.getYear(), movieRecordForm.getIntroduction(),
                 movieRecordForm.getPicturePath(), null, null, movieRecordForm.getPictureContent().getBytes());
-        movieMapper.updateByPrimaryKeySelective(movie);
+        movieMapper.updateByPrimaryKey(movie);
     }
 
     public void deleteMovie(Integer ID){

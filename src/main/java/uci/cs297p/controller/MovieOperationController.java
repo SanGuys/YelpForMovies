@@ -3,6 +3,7 @@ package uci.cs297p.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import uci.cs297p.model.Movie;
 import uci.cs297p.model.MovieRecordForm;
@@ -55,17 +56,17 @@ public class MovieOperationController {
         return "movieDetailPage";
     }
 
-    @RequestMapping("/editMovie")
+    @RequestMapping(value="/editMovie", method = RequestMethod.GET)
     public String editMovie(@RequestParam("ID") Integer id, Model model){
         Movie movie = movieOperationService.getMovie(id);
         model.addAttribute("movie", movie);
         return "editMovie";
     }
 
-    @RequestMapping("/editMovieSubmit")
+    @RequestMapping(value="/editMovieSubmit", method=RequestMethod.POST)
     @ResponseBody
-    public String editMovieSubmit(MovieRecordForm movieRecordForm) {
-        movieOperationService.addMovie(movieRecordForm);
+    public String editMovieSubmit(MovieRecordForm movieRecordForm, BindingResult bindingResult) {
+        movieOperationService.editMovie(movieRecordForm);
         return "Successfully Edited! \n" + movieRecordForm.toString();
     }
 
