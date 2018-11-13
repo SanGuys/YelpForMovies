@@ -29,7 +29,7 @@ public class MovieOperationService {
         // public Movie(Integer id, String name, Integer year, String introduction, String picturePath, Date createTime, Date updateTime, byte[] pictureContent) {
         Movie movie = new Movie(movieRecordForm.getId(), movieRecordForm.getName(), movieRecordForm.getYear(), movieRecordForm.getIntroduction(),
                 movieRecordForm.getPicturePath(), null, null, movieRecordForm.getPictureContent().getBytes());
-        movieMapper.updateByPrimaryKey(movie);
+        movieMapper.updateByPrimaryKeySelective(movie);
     }
 
     public void deleteMovie(Integer ID){

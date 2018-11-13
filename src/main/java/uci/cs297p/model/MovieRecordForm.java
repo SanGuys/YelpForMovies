@@ -14,8 +14,8 @@ public class MovieRecordForm {
     @Override
     public String toString() {
         return "MovieRecordForm{" +
-                "id='" + id + '\'' +
-                "name='" + name + '\'' +
+                "id=" + id  +
+                ", name='" + name + '\'' +
                 ", year=" + year +
                 ", introduction='" + introduction + '\'' +
                 ", picture_path='" + picturePath + '\'' +

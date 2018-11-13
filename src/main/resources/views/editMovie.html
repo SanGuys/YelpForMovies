@@ -14,6 +14,9 @@
         <div style="width: 30%; margin: 25px auto;">
             <form th:action="@{'/editMovieSubmit?ID='+${movie.id}}" method="post" th:object="${movieRecordForm}">
                 <div class="form-group">
+                    <input class="form-control" type="text" name="id" th:field="${movie.id}">
+                </div>
+                <div class="form-group">
                     <input class="form-control" type="text" name="name" th:field="${movie.name}">
                 </div>
                 <div class="form-group">
