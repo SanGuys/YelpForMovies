@@ -12,7 +12,14 @@
     <title>HomePage</title>
     <style type="text/css">
         .movie-profile {
-            padding-bottom: 30px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .movie-profile-name {
+            padding-top: 8px;
+            padding-bottom: 0px;
+            text-align:center;
         }
 
         .movie-profile-intro {
@@ -24,7 +31,7 @@
         }
 
         .movie-profile-pic-box {
-            height: 300px;
+            height: 270px;
             text-align: center;
             vertical-align: middle;
         }
@@ -86,7 +93,7 @@
     </nav>
 </div>
 
-<div class="container" style="padding-top: 50px">
+<div class="container" style="padding-top: 30px">
     <form class="form" action="/searchMovie" method="post">
         <div class="input-group">
             <label for="keyWords"></label>
@@ -115,6 +122,7 @@
             </div>
             <p class="movie-profile-name">
                 <a th:href="@{'/movieDetailPage?ID='+${movie.id}}" th:text="${movie.name}"></a>
+                <a th:href="@{'/movieDetailPage?ID='+${movie.id}}" th:text="'('+${movie.year}+')'"></a>
             </p>
             <div class="movie-profile-intro" th:text="${movie.introduction}"></div>
         </div>
