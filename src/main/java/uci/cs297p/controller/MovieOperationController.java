@@ -30,14 +30,14 @@ public class MovieOperationController {
         return "searchResult";
     }
 
-    @RequestMapping("/addMovie")
+    @RequestMapping(value="/addMovie", method = RequestMethod.GET)
     public String addMovie() {
         return "addMovie";
     }
 
-    @RequestMapping("/addMovieSubmit")
+    @RequestMapping(value="/addMovieSubmit", method=RequestMethod.POST)
     @ResponseBody
-    public String addMovieSubmit(MovieRecordForm movieRecordForm) {
+    public String addMovieSubmit(MovieRecordForm movieRecordForm, BindingResult bindingResult) {
         movieOperationService.addMovie(movieRecordForm);
         return "Successfully Added! \n" + movieRecordForm.toString();
     }
@@ -54,6 +54,7 @@ public class MovieOperationController {
         Movie movie = movieOperationService.getMovie(id);
         model.addAttribute("movie", movie);
         return "movieDetailPage";
+
     }
 
     @RequestMapping(value="/editMovie", method = RequestMethod.GET)

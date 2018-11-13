@@ -6,28 +6,9 @@
     <title>Let's add a movie!</title>
 </head>
 <body>
+    <h1 align="center">Let's add a movie!</h1>
     <div style="width: 30%; margin: 25px auto;">
-        <h1 align="center">Let's add a movie!</h1>
-<<<<<<< HEAD
-        <div style="width: 30%; margin: 25px auto;">
-            <form align="center" action="/addMovieSubmit" method="post" th:object="${moviesRecordForm}">
-                <div class="form-group">
-                    <input class="form-control" type="text" name="name" placeholder="Name">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="year" placeholder="Year">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="introduction" placeholder="Introduction">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="picturePath" placeholder="Picture Path">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="pictureContent" placeholder="Picture Content">
-                </div>
-=======
-        <form align="center" action="/addMovieSubmit" method="post" >
+        <form align="center" action="/addMovieSubmit" method="post" th:object="${movieRecordForm}">
             <div class="form-group">
                 <input class="form-control" type="text" name="name" placeholder="Name">
             </div>
@@ -43,15 +24,11 @@
             <div class="form-group">
                 <input class="form-control" type="text" name="pictureContent" placeholder="Picture Content">
             </div>
->>>>>>> 87eb6b9df4cf40d3d7e1e6e3382d5f17c4869024
-
-                <div class="form-group">
-                    <button class="btn btn-lg btn-default btn-primary btn-block">Submit!</button>
-                </div>
-
-                <a href="/">Go back</a>
-            </form>
-        </div>
+            <div class="form-group">
+                <button class="btn btn-lg btn-default btn-primary btn-block">Submit!</button>
+            </div>
+            <a href="/">Go back</a>
+        </form>
     </div>
 </body>
 </html>

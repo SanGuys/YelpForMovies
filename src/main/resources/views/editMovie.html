@@ -9,7 +9,6 @@
 <body>
 <div class="container">
     <div class="row">
-        <!--<h1 style="text-align: center">Edit the Movie</h1>-->
         <h1 align="center">Edit the Movie</h1>
         <div style="width: 30%; margin: 25px auto;">
             <form th:action="@{'/editMovieSubmit?ID='+${movie.id}}" method="post" th:object="${movieRecordForm}">
@@ -34,30 +33,6 @@
                 <div class="form-group">
                     <button class="btn btn-lg btn-default btn-primary btn-block">Submit!</button>
                 </div>
-
-
-                <!--<div class="form-group">-->
-                    <!--<input class="form-control" type="text" name="name" placeholder="N">-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<input class="form-control" type="text" name="year" placeholder="N">-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<input class="form-control" type="text" name="introduction" placeholder="N">-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<input class="form-control" type="text" name="picturePath" placeholder="N">-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<input class="form-control" type="text" name="pictureContent" placeholder="N">-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<button class="btn btn-lg btn-default btn-primary btn-block">Submit!</button>-->
-                <!--</div>-->
-
-                <!--<input type="reset" class="reset" value="Reset"/>-->
-                <!--<input type="submit" class="register" value="save changes"/>-->
-                <!--<div class="clear"></div>-->
             </form>
             <a href="/">Go back</a>
         </div>
