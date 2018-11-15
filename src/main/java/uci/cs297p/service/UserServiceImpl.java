@@ -32,8 +32,11 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ServerResponse<String> signup(User user) {
-        if (user.getUsername().isEmpty() || user.getEmail().isEmpty() || user.getPassword()
-                .isEmpty()) {
+        if (StringUtils.isNullOrEmpty(user.getUsername()) ||
+                StringUtils.isNullOrEmpty(user.getEmail()) ||
+                StringUtils.isNullOrEmpty(user.getPassword()) ||
+                StringUtils.isNullOrEmpty(user.getQuestion()) ||
+                StringUtils.isNullOrEmpty(user.getAnswer())) {
             return ServerResponse.failWithMsg("info incomplete!");
         }
         if (userMapper.checkUsername(user.getUsername()) > 0) {
