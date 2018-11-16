@@ -147,15 +147,14 @@
         $("#signIn").click(function () {
             $.ajax({
                 type: "post",
-                url: "check.do",
+                url: "/user/login.do",
                 dataType: "json",
                 data: {
                     "username": $("#username").val(),
                     "password": $("#password").val(),
-                    "charcode": $("#codes").val()
                 },
                 success: function (data) {
-                    if (data.result == "success") {
+                    if (data.status == 0) {
                         window.location.href = '/';
                     } else {
                         alert("password error");

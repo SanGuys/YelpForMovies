@@ -93,13 +93,31 @@
 
                 <div class="form-group">
 
-                    <input type="username" class="form-control" id="username" placeholder="Email Address">
+                    <input type="username" class="form-control" id="username" placeholder="Username">
 
                 </div>
 
                 <div class="form-group">
 
                     <input type="password" class="form-control" id="password" placeholder="Password">
+
+                </div>
+
+                <div class="form-group">
+
+                    <input type="email" class="form-control" id="email" placeholder="Email Address">
+
+                </div>
+
+                <div class="form-group">
+
+                    <input type="text" class="form-control" id="question" placeholder="Question">
+
+                </div>
+
+                <div class="form-group">
+
+                    <input type="text" class="form-control" id="answer" placeholder="Answer">
 
                 </div>
 
@@ -127,17 +145,19 @@
         $("#signUp").click(function () {
             $.ajax({
                 type: "post",
-                url: "register.do",
+                url: "/user/signup.do",
                 dataType: "json",
                 data: {
                     "username": $("#username").val(),
                     "password": $("#password").val(),
-                    "charcode": $("#codes").val()
+                    "email": $("#email").val(),
+                    "question": $("#question").val(),
+                    "answer": $("#answer").val(),
                 },
                 success: function (data) {
-                    if (data.result == "success") {
+                    if (data.status == 0) {
                         alert("Success! Please Sign In.");
-                        window.location.href = '/signIn';
+                        window.location.href = '/user/signIn';
                     } else {
                         alert("The username already exists");
                     }

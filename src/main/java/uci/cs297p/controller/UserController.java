@@ -22,6 +22,16 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+    @RequestMapping(value = "/signIn")
+    public String signIn() {
+        return "signIn";
+    }
+
+    @RequestMapping(value = "/signUp")
+    public String signUp() {
+        return "signUp";
+    }
+
     //Verified
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
