@@ -1,3 +1,5 @@
+#!/usr/bin/python3 
+
 # -*- coding: utf-8 -*-
 """
 Spyder Editor
@@ -63,22 +65,41 @@ movies = "Movies.csv"
 # create a set to detect duplicate
 l = []
 
+# initialize all counters
+num_tids = 0
+num_invalid = 0
+num_duplicate = 0
+num_success = 0
+
 with open(tids) as r, open(movies, 'w', newline = '') as w:
     reader = csv.reader(r)
     writer = csv.writer(w, dialect='excel')
     writer.writerow(['id', 'name', 'year', 'introduction', 'picture_path', 'rating', 'rating_number'])
     for row in reader:
         tid = str(row[0])
+        num_tids += 1
         #print(tid)
         if not validTid(tid):
             print(tid + " is invalid tid")
+            num_invalid += 1
             continue
         if tid in l:
             print(tid + " is duplicate and will not be processed")
+            num_duplicate += 1
             continue
         else:
             l.append(tid)
             print(tid + " success")
+            num_success += 1
         realname, year, sumtext, imgurl, rating = getInfo(tid)
         l = [tid, realname, year, sumtext, imgurl, rating, '1']
         writer.writerow(l)
+
+
+# summary
+print("---------------  Summary  -----------")
+print("Totally ", num_tids, " tids have been processed:")
+print("-  ", num_success, " tids success")
+print("-  ", num_duplicate, " tids duplicate")
+print("-  ", num_invalid, " tids invalid")
+
