@@ -9,7 +9,8 @@ public class MovieRecordForm {
     int year;
     String introduction;
     String picturePath;
-    String pictureContent;
+    float rating;
+    int ratingNumber;
 
     @Override
     public String toString() {
@@ -19,7 +20,8 @@ public class MovieRecordForm {
                 ", year=" + year +
                 ", introduction='" + introduction + '\'' +
                 ", picture_path='" + picturePath + '\'' +
-                ", picture_content='" + pictureContent + '\'' +
+                ", rating='" + rating + '\'' +
+                ", ratingNumber='" + ratingNumber + '\'' +
                 '}';
     }
 }
