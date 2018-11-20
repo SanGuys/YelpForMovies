@@ -3,10 +3,10 @@ package uci.cs297p.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.RedirectView;
 import uci.cs297p.common.Cnst;
 import uci.cs297p.common.ResponseCode;
 import uci.cs297p.common.ServerResponse;
@@ -42,11 +42,11 @@ public class UserController {
     }
 
     //Verified
-    @RequestMapping(value = "logout.do", method = RequestMethod.POST)
-    @ResponseBody
-    public ServerResponse<String> logout(HttpSession session) {
+    @RequestMapping(value = "logout.do", method = RequestMethod.GET)
+    public RedirectView logout(HttpSession session) {
         session.removeAttribute(Cnst.CURRENT_USER);
-        return ServerResponse.succWithMsg("logout success");
+        return new RedirectView("/");
+
     }
 
     //verified

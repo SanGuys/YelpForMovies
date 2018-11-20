@@ -103,9 +103,18 @@
     </nav>
 </div>
 
-<!--<div class="container" style="padding-top: 50px">-->
-<!--<a href="/addMovie" class="btn btn-primary btn-block">Add Movie</a>-->
-<!--</div>-->
+<div class="container" style="padding-top: 50px">
+    <form class="form" action="/searchMovie" method="post">
+        <div class="input-group">
+            <label for="keyWords"></label>
+            <input type="text" class="form-control mr-sm-5" placeholder="" id="keyWords" name="keyWords">
+            <span class="input-group-btn">
+                <label for="searchButton"></label>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchButton">Search</button>
+            </span>
+        </div>
+    </form>
+</div>
 
 <div class="container" style="padding-top: 50px">
     <h3>Explore Movies</h3>
