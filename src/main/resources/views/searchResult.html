@@ -53,36 +53,46 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-                <!--<li class="nav-item">-->
-                <!--<a class="nav-link disabled" href="#">Disabled</a>-->
-                <!--</li>-->
+                <div th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getRole() == 1}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Manage Movies
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/addMovie">Add movie</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/">Something else here</a>
+                        </div>
+                    </li>
+                </div>
             </ul>
-            <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
-                <li class="nav-item"><a class="nav-link" href="https://project.example.com/signin/">Sign in</a></li>
-                <li class="nav-item"><a class="nav-link" href="https://project.example.com/my-account/">Sign up</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav d-lg-none">
-                <li class="nav-item-divider"></li>
-                <li class="nav-item"><a class="nav-link" href="https://project.example.com/signin/">Sign in</a></li>
-                <li class=" nav-item"><a class="nav-link" href="https://project.example.com/my-account/">Sign up</a>
-                </li>
-            </ul>
+            <div th:if="${session.CURRENT_USER}">
+                <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
+                    <li class="nav-item"><a class="nav-link"
+                                            th:href="@{'/user/profile?id='+${session.CURRENT_USER.getId()}}"
+                                            th:text="${session.CURRENT_USER.getUsername()}"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/logout.do">Sign Out</a></li>
+                </ul>
+                <ul class="navbar-nav d-lg-none">
+                    <li class="nav-item-divider"></li>
+                    <li class="nav-item"><a class="nav-link"
+                                            th:href="@{'/user/profile?id='+${session.CURRENT_USER.getId()}}"
+                                            th:text="${session.CURRENT_USER.getUsername()}"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/logout.do">Sign Out</a></li>
+                </ul>
+            </div>
+            <div th:unless="${session.CURRENT_USER}">
+                <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
+                    <li class="nav-item"><a class="nav-link" href="/user/signIn">Sign in</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/signUp">Sign up</a></li>
+                </ul>
+                <ul class="navbar-nav d-lg-none">
+                    <li class="nav-item-divider"></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/signIn">Sign in</a></li>
+                    <li class=" nav-item"><a class="nav-link" href="/user/signUp">Sign up</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 </div>

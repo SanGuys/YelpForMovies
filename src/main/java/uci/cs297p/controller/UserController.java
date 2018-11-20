@@ -32,6 +32,11 @@ public class UserController {
         return "signUp";
     }
 
+    @RequestMapping(value = "/profile")
+    public String userProfile() {
+        return "profile";
+    }
+
     //Verified
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
