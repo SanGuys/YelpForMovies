@@ -11,7 +11,7 @@
     <div class="row">
         <h1 align="center">Edit the Movie</h1>
         <div style="width: 30%; margin: 25px auto;">
-            <form th:action="@{'/editMovieSubmit?ID='+${movie.id}}" method="post" th:object="${movieRecordForm}">
+            <form align='center' th:action="@{'/editMovieSubmit?ID='+${movie.id}}" method="post" th:object="${movieRecordForm}">
                 <div hidden class="form-group">
                     <input class="form-control" type="text" name="id" th:field="${movie.id}">
                 </div>
@@ -30,8 +30,8 @@
                 <div class="form-group">
                     <button class="btn btn-lg btn-default btn-primary btn-block">Submit!</button>
                 </div>
+                <a href="/">Go back</a>
             </form>
-            <a href="/">Go back</a>
         </div>
 
     </div>
