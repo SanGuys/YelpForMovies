@@ -80,7 +80,13 @@
                                 <input type="button" class="btn btn-primary d-none" id="btnDiscard"
                                        value="Discard Changes"/>
                             </div>
+                            <div class="pull-right">
+                                <a class="btn btn-warning" th:href="@{'/user/profile/update?ID='+${session.CURRENT_USER.getId()}}">
+                                    Edit
+                                </a>
+                            </div>
                         </div>
+
                     </div>
 
                     <div class="row">
@@ -91,8 +97,8 @@
                                        role="tab" aria-controls="basicInfo" aria-selected="true">Basic Info</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="favoriteList-tab" data-toggle="tab" href="#favoriteList"
-                                       role="tab" aria-controls="favoriteList" aria-selected="false">Favorite List</a>
+                                    <a class="nav-link" id="collections-tab" data-toggle="tab" href="#collections"
+                                       role="tab" aria-controls="collections" aria-selected="false">Collections</a>
                                 </li>
                             </ul>
 
@@ -130,14 +136,14 @@
                                         <div class="col-sm-3 col-md-2 col-5">
                                             <label style="font-weight:bold;">Phone</label>
                                         </div>
-                                        <div class="col-md-8 col-6" th:text="${session.CURRENT_USER.getUsername()}"></div>
+                                        <div class="col-md-8 col-6" th:text="${session.CURRENT_USER.getPhone()}"></div>
                                     </div>
                                     <hr/>
                                 </div>
 
 
-                                <div class="tab-pane fade" id="favoriteList" role="tabpanel"
-                                     aria-labelledby="favoriteList-tab">
+                                <div class="tab-pane fade" id="collections" role="tabpanel"
+                                     aria-labelledby="collections-tab">
                                     Movie List...
                                 </div>
                             </div>
