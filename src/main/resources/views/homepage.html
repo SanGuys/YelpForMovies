@@ -128,8 +128,7 @@
                 </a>
             </div>
             <p class="movie-profile-name">
-                <a th:href="@{'/movieDetailPage?ID='+${movie.id}}" th:text="${movie.name}"></a>
-                <a th:href="@{'/movieDetailPage?ID='+${movie.id}}" th:text="'('+${movie.year}+')'"></a>
+                <a th:href="@{'/movieDetailPage?ID='+${movie.id}}" th:text="${movie.name} + '('+${movie.year}+')'"></a>
             </p>
             <div class="movie-profile-intro" th:text="${movie.introduction}"></div>
         </div>
