@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Edit User Profile</title>
+</head>
+
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">YelpForMovies</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <div th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getRole() == 1}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Manage Movies
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/addMovie">Add movie</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/">Something else here</a>
+                        </div>
+                    </li>
+                </div>
+            </ul>
+            <div th:if="${session.CURRENT_USER}">
+                <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
+                    <li class="nav-item"><a class="nav-link"
+                                            th:href="@{'/user/profile?id='+${session.CURRENT_USER.getId()}}"
+                                            th:text="${session.CURRENT_USER.getUsername()}"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/logout.do">Sign Out</a></li>
+                </ul>
+                <ul class="navbar-nav d-lg-none">
+                    <li class="nav-item-divider"></li>
+                    <li class="nav-item"><a class="nav-link"
+                                            th:href="@{'/user/profile?id='+${session.CURRENT_USER.getId()}}"
+                                            th:text="${session.CURRENT_USER.getUsername()}"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/logout.do">Sign Out</a></li>
+                </ul>
+            </div>
+            <div th:unless="${session.CURRENT_USER}">
+                <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
+                    <li class="nav-item"><a class="nav-link" href="/user/signIn">Sign in</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/signUp">Sign up</a></li>
+                </ul>
+                <ul class="navbar-nav d-lg-none">
+                    <li class="nav-item-divider"></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/signIn">Sign in</a></li>
+                    <li class=" nav-item"><a class="nav-link" href="/user/signUp">Sign up</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="row card card-block">
+        <div class="card-title" align="center" style="padding-top: 30px">
+            <h2>Update User Profile</h2>
+        </div>
+        <div style="width: 30%; margin: 25px auto;">
+            <form th:action="@{'/user/profile'}" method="POST" th:object="${userProfileForm}">
+                <input type="hidden" name="_method" value="PUT">
+
+                <div hidden class="form-group">
+                    <input class="form-control" type="text" name="id" th:field="${user.id}" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    username:
+                    <input class="form-control" type="text" name="username" th:field="${user.username}" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    password:
+                    <input class="form-control" type="password" name="password" th:field="${user.password}">
+                </div>
+                <div class="form-group">
+                    email:
+                    <input class="form-control" type="email" name="email" th:field="${user.email}">
+                </div>
+                <div class="form-group">
+                    phone:
+                    <input class="form-control" type="text" name="phone" th:field="${user.phone}">
+                </div>
+                <div class="form-group">
+                    question:
+                    <input class="form-control" type="text" name="question" th:field="${user.question}">
+                </div>
+                <div class="form-group">
+                    answer:
+                    <input class="form-control" type="text" name="answer" th:field="${user.answer}">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-default btn-primary btn-block">Submit!</button>
+                </div>
+            </form>
+            <a href="/user/profile">Go back</a>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>

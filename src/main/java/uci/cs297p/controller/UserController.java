@@ -3,6 +3,7 @@ package uci.cs297p.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +12,7 @@ import uci.cs297p.common.Cnst;
 import uci.cs297p.common.ResponseCode;
 import uci.cs297p.common.ServerResponse;
 import uci.cs297p.model.User;
+import uci.cs297p.model.UserProfileForm;
 import uci.cs297p.service.IUserService;
 
 import javax.servlet.http.HttpSession;
@@ -32,9 +34,24 @@ public class UserController {
         return "signUp";
     }
 
-    @RequestMapping(value = "/profile")
-    public String userProfile() {
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String userProfile(HttpSession session) {
         return "profile";
+    }
+
+    @RequestMapping(value="/profile/update", method = RequestMethod.GET)
+    public String userProfileUpdate(HttpSession session, Model model){
+        User user = (User) session.getAttribute(Cnst.CURRENT_USER);
+        model.addAttribute("user", user);
+        return "editProfile";
+    }
+
+    @RequestMapping(value="/profile", method=RequestMethod.PUT)
+    public RedirectView userProfileUpdateSubmit(HttpSession session, UserProfileForm userProfileForm) {
+        User user = (User) session.getAttribute(Cnst.CURRENT_USER);
+        ServerResponse serverResponse = userService.updateUserInfo(user, userProfileForm);
+        if (serverResponse.isSucc()) session.setAttribute(Cnst.CURRENT_USER, serverResponse.getData());
+        return new RedirectView("/user/profile");
     }
 
     //Verified

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import uci.cs297p.common.*;
 import uci.cs297p.model.User;
 import uci.cs297p.model.UserMapper;
+import uci.cs297p.model.UserProfileForm;
 
 import java.util.UUID;
 
@@ -137,6 +138,26 @@ public class UserServiceImpl implements IUserService {
         updateUser.setUpdateField(user);
         if (userMapper.updateByPrimaryKeySelective(updateUser) > 0) {
             return ServerResponse.succWithMsgData("update userInfo success!", updateUser);
+        } else {
+            return ServerResponse.failWithMsg("update userInfo failed!");
+        }
+    }
+
+    @Override
+    public ServerResponse<User> updateUserInfo(User user, UserProfileForm userProfileForm) {
+        //We ONLY update user.email, phone, question, answer according to id. NOT update user.id, username.
+        if (userProfileForm.getId() != user.getId()) {
+            return ServerResponse.failWithMsg("duplicate user_id! update userInfo failed!");
+        }
+        user.setPassword(null);
+        if(userProfileForm.getPassword() != null && !"".equals(userProfileForm.getPassword())) user.setPassword(MD5Util.getMD5(userProfileForm.getPassword()));
+        if(userProfileForm.getPhone() != null) user.setPhone(userProfileForm.getPhone());
+        if(userProfileForm.getEmail() != null) user.setEmail(userProfileForm.getEmail());
+        if(userProfileForm.getQuestion() != null) user.setQuestion(userProfileForm.getQuestion());
+        if(userProfileForm.getAnswer() != null) user.setAnswer(userProfileForm.getAnswer());
+
+        if (userMapper.updateByPrimaryKeySelective(user) > 0) {
+            return ServerResponse.succWithMsgData("update userInfo success!", user);
         } else {
             return ServerResponse.failWithMsg("update userInfo failed!");
         }
