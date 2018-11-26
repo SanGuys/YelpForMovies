@@ -99,8 +99,13 @@
 
                 <div class="form-group">
 
-                    <input type="password" class="form-control" id="password" placeholder="Password">
+                    <input type="password" class="form-control" id="password" placeholder="Password" onkeyup="checkPassword()"/>
+                    <span id="checkPassword"></span>
+                </div>
 
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password2" placeholder="Verify Password" onkeyup="checkPassword()"/>
+                    <span id="mismatchedPasswords"></span>
                 </div>
 
                 <div class="form-group">
@@ -141,6 +146,39 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 <script>
+
+    function checkPassword() {
+        legalPassword();
+        validate();
+    }
+
+    function legalPassword() {
+        // use regex to ensure legal password
+        var reg=/^[a-zA-Z0-9]{4,15}$/;
+        var pwd = document.getElementById("password").value;
+
+        if (reg.test(pwd) == true) {
+            document.getElementById("checkPassword").innerHTML="<font color='green'>Good password</font>";
+            document.getElementById("signUp").disabled = false;
+        } else {
+            document.getElementById("checkPassword").innerHTML="<font color='red'>Password should be 4-15 characters long and only contains letters and numbers</font>";
+            document.getElementById("signUp").disabled = true;
+        }
+    }
+
+    function validate() {
+        var pw1 = document.getElementById("password").value;
+        var pw2 = document.getElementById("password2").value;
+        if(pw1 == pw2) {
+            document.getElementById("mismatchedPasswords").innerHTML="<font color='green'>Passwords match</font>";
+            document.getElementById("signUp").disabled = false;
+        }
+        else {
+            document.getElementById("mismatchedPasswords").innerHTML="<font color='red'>Passwords do not match</font>";
+            document.getElementById("signUp").disabled = true;
+        }
+    }
+
     $(document).ready(function () {
         $("#signUp").click(function () {
             $.ajax({
@@ -163,7 +201,7 @@
                     }
                 },
                 error: function () {
-                    alert("network error");
+                    alert("Internal Error. Please contact admin");
                 }
             });
         });

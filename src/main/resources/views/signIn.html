@@ -157,11 +157,11 @@
                     if (data.status == 0) {
                         window.location.href = '/';
                     } else {
-                        alert("password error");
+                        alert("Wrong username or password");
                     }
                 },
                 error: function () {
-                    alert("network error");
+                    alert("Internal Error. Please contact admin");
                 }
             });
         });

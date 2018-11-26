@@ -2,6 +2,7 @@ package uci.cs297p.service;
 
 import uci.cs297p.common.ServerResponse;
 import uci.cs297p.model.User;
+import uci.cs297p.model.UserProfileForm;
 
 public interface IUserService {
     ServerResponse<User> login(String username, String password);
@@ -19,4 +20,6 @@ public interface IUserService {
     ServerResponse<User> getUserInfo(User user);
 
     ServerResponse<User> updateUserInfo(User user);
+
+    ServerResponse<User> updateUserInfo(User user, UserProfileForm userProfileForm);
 }
