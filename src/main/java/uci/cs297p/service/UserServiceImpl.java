@@ -43,9 +43,9 @@ public class UserServiceImpl implements IUserService {
         if (userMapper.checkUsername(user.getUsername()) > 0) {
             return ServerResponse.failWithMsg("username already exists!");
         }
-        if (userMapper.checkEmail(user.getEmail()) > 0) {
-            return ServerResponse.failWithMsg("email already exists!");
-        }
+//        if (userMapper.checkEmail(user.getEmail()) > 0) {
+//            return ServerResponse.failWithMsg("email already exists!");
+//        }
         user.setRole(Cnst.Role.ROLE_CUSTOMER);
         //MD5 encryption
         user.setPassword(MD5Util.getMD5(user.getPassword()));
