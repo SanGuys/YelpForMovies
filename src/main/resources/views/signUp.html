@@ -147,6 +147,7 @@
 <script>
 
     function checkPassword() {
+        validate();
         legalPassword();
         validate();
     }
@@ -170,7 +171,6 @@
         var pw2 = document.getElementById("password2").value;
         if(pw1 == pw2) {
             document.getElementById("mismatchedPasswords").innerHTML="<font color='green'>Passwords match</font>";
-            document.getElementById("signUp").disabled = false;
         }
         else {
             document.getElementById("mismatchedPasswords").innerHTML="<font color='red'>Passwords do not match</font>";
