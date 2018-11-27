@@ -11,6 +11,7 @@ import uci.cs297p.common.ServerResponse;
 import uci.cs297p.model.Comment;
 import uci.cs297p.model.User;
 import uci.cs297p.service.ICommentService;
+import uci.cs297p.service.IUserService;
 
 @Controller
 @RequestMapping("/comment/")

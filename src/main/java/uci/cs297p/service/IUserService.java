@@ -22,4 +22,6 @@ public interface IUserService {
     ServerResponse<User> updateUserInfo(User user);
 
     ServerResponse<User> updateUserInfo(User user, UserProfileForm userProfileForm);
+
+    String getUserName(Integer userId);
 }

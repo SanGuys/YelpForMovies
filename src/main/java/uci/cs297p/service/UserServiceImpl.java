@@ -128,6 +128,17 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    // just return username with user id
+    public String getUserName(Integer userId) {
+        User user = userMapper.selectByPrimaryKey(32);
+        String name = "null";
+        if(user != null) {
+            name = user.getUsername();
+        }
+        return name;
+    }
+
+    @Override
     public ServerResponse<User> updateUserInfo(User user) {
         //We ONLY update user.email, phone, question, answer according to id. NOT update user.id, name, password.
         //id, name got from session.

@@ -7,10 +7,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
     <title>Movie Detail</title>
+    <style>
+        .updateTime {
+            color: #777777;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <div class="row">
+        <!--left column-->
         <div class="col-md-3">
             <a href="/" class="lead">YelpForMovies</a>
             <div class="list-group">
@@ -19,6 +25,8 @@
                 <li class="list-group-item">Animation</li>
             </div>
         </div>
+
+        <!--movie detail-->
         <div class="col-md-9">
             <div class="thumbnail">
                 <img class="img-responsive" th:src="${movie.picturePath}" alt="movie-profile-pic">
@@ -39,11 +47,11 @@
                     </div>
                 </div>
             </div>
-            <div class="well" th:each="comment: ${commentList}">
-                <div th:text="${comment.content}"></div>
-            </div>
+
+            <!--comment part-->
             <div class="well">
-                <div class="text-right">
+                <!--add a comment-->
+                <div class="text-right" th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getRole() == 1}">
                     <form title="Comment" action="/comment/add.do" method="post">
                         <input type="hidden" name="movieId" th:value="${movie.id}">
                         <textarea class="form-control" cols="200" rows="5" name="content"
@@ -53,37 +61,17 @@
                 </div>
                 <hr>
 
-                <!--&lt;!&ndash;show comments&ndash;&gt;-->
-                <!--<div id='comments' class="row">-->
-                <!--<div v-for="comment in list" class="col-md-12">-->
-                <!--<strong>{{comment.user}}</strong>-->
-                <!--<p>-->
-                <!--{{comment.text}}-->
-                <!--</p>-->
-                <!--</div>-->
-                <!--</div>-->
+                <!--show comments-->
+                <div class="row">
+                    <div class="col-md-12" th:each="comment: ${commentList}">
+                        <!--<strong th:text="'123'"></strong>-->
+                        <span class="pull-right updateTime" th:text="'Update time: ' + ${comment.updateTime}"></span>
+                        <p th:text='${comment.content}'></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <!--<script>-->
-    <!--var vm = new Vue({-->
-    <!--el: '#comments',-->
-    <!--data: {-->
-    <!--list: [{-->
-    <!--user: 'Andy',-->
-    <!--text: 'Transformers are great!',-->
-    <!--}, {-->
-    <!--user: 'Bear',-->
-    <!--text: 'No, Batman is better!'-->
-    <!--}, {-->
-    <!--user: 'Shuo',-->
-    <!--text: 'Eating watermelon',-->
-    <!--}]-->
-    <!--}-->
-    <!--});-->
-
-    <!--</script>-->
 </div>
 
 </body>
