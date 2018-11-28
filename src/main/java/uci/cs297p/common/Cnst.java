@@ -18,4 +18,9 @@ public class Cnst {
         int ROLE_CUSTOMER = 0;
         int ROLE_ADMIN = 1;
     }
+
+    public interface CollectionStatus{
+        int COLLECTION_FALSE = 0;
+        int COLLECTION_TRUE = 1;
+    }
 }

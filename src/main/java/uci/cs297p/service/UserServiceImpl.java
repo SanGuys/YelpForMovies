@@ -200,7 +200,7 @@ public class UserServiceImpl implements IUserService {
     public ServerResponse<UMRelation> updateCollection(UMRelationKey key) {
         UMRelation recordInDB = umRelationMapper.selectByPrimaryKey(key);
         if (recordInDB != null) {
-            if (recordInDB.getCollected() == 1 && recordInDB.getRating() == null) {
+            if (recordInDB.getCollected() == Cnst.CollectionStatus.COLLECTION_TRUE && recordInDB.getRating() == null) {
                 if(umRelationMapper.deleteByPrimaryKey(key) > 0) {
                     return ServerResponse.succWithMsgData("update success!", null);
                 } else {
