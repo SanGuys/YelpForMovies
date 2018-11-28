@@ -11,6 +11,9 @@
         .updateTime {
             color: #777777;
         }
+        .unresize {
+            resize: none;
+        }
     </style>
 </head>
 <body>
@@ -51,10 +54,10 @@
             <!--comment part-->
             <div class="well">
                 <!--add a comment-->
-                <div class="text-right" th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getRole() == 1}">
+                <div class="text-right" th:if="${session.CURRENT_USER != null}">
                     <form title="Comment" action="/comment/add.do" method="post">
                         <input type="hidden" name="movieId" th:value="${movie.id}">
-                        <textarea class="form-control" cols="200" rows="5" name="content"
+                        <textarea class="form-control unresize" cols="200" rows="5" name="content"
                                   placeholder="Say something..."></textarea>
                         <button class="btn btn-success">Add new comment</button>
                     </form>
@@ -63,10 +66,19 @@
 
                 <!--show comments-->
                 <div class="row">
-                    <div class="col-md-12" th:each="comment: ${commentList}">
-                        <!--<strong th:text="'123'"></strong>-->
+                    <div class="col-md-12" th:each="comment, iterStat: ${commentList}">
+                        <!--show username, comment and update time-->
+                        <strong th:text="${userNamesOfCommentList[iterStat.index]}"></strong>
                         <span class="pull-right updateTime" th:text="'Update time: ' + ${comment.updateTime}"></span>
                         <p th:text='${comment.content}'></p>
+
+                        <!--delete your comment-->
+                        <div th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getId() == userIdsOfCommentList[iterStat.index]}">
+                            <form class="delete-form" th:action="@{'/comment/delete.do?ID='+${comment.id}}" method="POST">
+                                <button class="btn btn-danger">Delete your comment</button>
+                            </form>
+                        </div>
+                        <br>
                     </div>
                 </div>
             </div>

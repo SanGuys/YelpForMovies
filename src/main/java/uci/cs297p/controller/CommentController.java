@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uci.cs297p.common.Cnst;
 import uci.cs297p.common.ServerResponse;
@@ -32,7 +33,7 @@ public class CommentController {
 
     @RequestMapping("delete.do")
     @ResponseBody
-    public ServerResponse delete(HttpSession session, Integer commentId) {
+    public ServerResponse delete(HttpSession session, @RequestParam("ID") Integer commentId) {
         User user = (User) session.getAttribute(Cnst.CURRENT_USER);
         if (user == null) {
             return ServerResponse.succWithMsg("user not login!");

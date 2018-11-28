@@ -132,7 +132,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     // just return username with user id
     public String getUserName(Integer userId) {
-        User user = userMapper.selectByPrimaryKey(32);
+        User user = userMapper.selectByPrimaryKey(userId);
         String name = "null";
         if(user != null) {
             name = user.getUsername();

@@ -24,6 +24,7 @@ public class MovieOperationController {
 
     @Autowired
     private IUserService userService;
+//    private IUserService myUserService;
 
     @RequestMapping("/")
     public String homepage(Model model){
@@ -64,21 +65,23 @@ public class MovieOperationController {
         model.addAttribute("movie", movie);
         List<Comment> commentList = commentController.listByUserIdMovieId(null, id).getData();
 
-        // get corresponding userNames of these comments
-//        List<String> userNames = new ArrayList<>();
-//        for(Comment cmt : commentList) {
-//            String username = "null";
-//            if(cmt.getUserId() != null) {
-//                Integer userId = cmt.getUserId();
-//                if(userId != null) {
-//                    IUserService myUserService = new UserServiceImpl();
-//                    username = myUserService.getUserName(userId);
-//                }
-//            }
-//            userNames.add(username);
-//        }
-//        model.addAttribute("userNamesOfCommentList", userNames);
+        // get corresponding userNames and userIds of these comments
+        List<String> userNames = new ArrayList<>();
+        List<Integer> userIds = new ArrayList<>();
+        for(Comment cmt : commentList) {
+            String username = "null";
+            if(cmt.getUserId() != null) {
+                Integer userId = cmt.getUserId();
+                if(userId != null) {
+                    username = myUserService.getUserName(userId);
+                }
+            }
+            userNames.add(username);
+            userIds.add(cmt.getUserId());
+        }
 
+        model.addAttribute("userNamesOfCommentList", userNames);
+        model.addAttribute("userIdsOfCommentList", userIds);
         model.addAttribute("commentList", commentList);
         return "movieDetailPage";
 
