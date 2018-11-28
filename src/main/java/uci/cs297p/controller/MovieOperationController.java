@@ -24,7 +24,6 @@ public class MovieOperationController {
 
     @Autowired
     private IUserService userService;
-//    private IUserService myUserService;
 
     @RequestMapping("/")
     public String homepage(Model model){
@@ -73,7 +72,7 @@ public class MovieOperationController {
             if(cmt.getUserId() != null) {
                 Integer userId = cmt.getUserId();
                 if(userId != null) {
-                    username = myUserService.getUserName(userId);
+                    username = userService.getUserName(userId);
                 }
             }
             userNames.add(username);
