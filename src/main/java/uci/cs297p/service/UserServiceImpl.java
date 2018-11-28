@@ -5,10 +5,9 @@ import com.mysql.cj.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uci.cs297p.common.*;
-import uci.cs297p.model.User;
-import uci.cs297p.model.UserMapper;
-import uci.cs297p.model.UserProfileForm;
+import uci.cs297p.model.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -16,6 +15,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UMRelationMapper umRelationMapper;
 
     @Override
     public ServerResponse<User> login(String username, String password) {
@@ -172,6 +174,48 @@ public class UserServiceImpl implements IUserService {
         } else {
             return ServerResponse.failWithMsg("update userInfo failed!");
         }
+    }
+
+    @Override
+    public ServerResponse<UMRelation> getCollection(UMRelationKey key) {
+        UMRelation recordInDB = umRelationMapper.selectByPrimaryKey(key);
+        if (recordInDB == null) {
+            return ServerResponse.failWithMsg("record not found in DB!");
+        } else {
+            return ServerResponse.succWithMsgData("getCollection success", recordInDB);
+        }
+    }
+
+    @Override
+    public ServerResponse<List<UMRelation>> getCollections(Integer userId) {
+        List<UMRelation> movieListInDB = umRelationMapper.getCollectionsByUserId(userId);
+        if (movieListInDB == null) {
+            return ServerResponse.failWithMsg("user not found in DB!");
+        } else {
+            return ServerResponse.succWithMsgData("getCollections success", movieListInDB);
+        }
+    }
+
+    @Override
+    public ServerResponse<UMRelation> updateCollection(UMRelationKey key) {
+        UMRelation recordInDB = umRelationMapper.selectByPrimaryKey(key);
+        if (recordInDB != null) {
+            if (recordInDB.getCollected() == 1 && recordInDB.getRating() == null) {
+                if(umRelationMapper.deleteByPrimaryKey(key) > 0) {
+                    return ServerResponse.succWithMsgData("update success!", null);
+                } else {
+                    return ServerResponse.failWithMsg("update failed!");
+                }
+            } else {
+                recordInDB.setCollected(1 - recordInDB.getCollected());
+                if(umRelationMapper.updateByPrimaryKeySelective(recordInDB) > 0){
+                    return ServerResponse.succWithMsgData("update success!", recordInDB);
+                } else {
+                    return ServerResponse.failWithMsg("update failed!");
+                }
+            }
+        }
+        return ServerResponse.failWithMsg("record not found in DB!");
     }
 }
 

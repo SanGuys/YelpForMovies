@@ -144,7 +144,37 @@
 
                                 <div class="tab-pane fade" id="collections" role="tabpanel"
                                      aria-labelledby="collections-tab">
-                                    Movie List...
+                                    <div class="container table-responsive" style="padding-top: 50px;">
+                                        <table id="contentTable" class="table table-hover table-nonfluid" style="text-align: center;">
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th style="width:20%">picture cover</th>
+                                                <th style="width:20%">name</th>
+                                                <th style="width:10%">year</th>
+                                                <th style="width:50%">introduction</th>
+                                                <!--<th style="width:10%">EDIT</th>-->
+                                                <!--<th style="width:10%">DELETE</th>-->
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr class="movie-profile" th:each="movie : ${movieList}">
+                                                <td>
+                                                    <div class="movie-profile-pic-box">
+                                                        <a th:href="@{'/movieDetailPage?ID='+${movie.id}}">
+                                                            <img class="movie-profile-pic" th:src="${movie.picturePath}" alt="movie-profile-pic"/>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <th scope="row"><a th:href="@{'/movieDetailPage?ID='+${movie.id}}" th:text="${movie.name}"></a>
+                                                </td>
+                                                <td th:text="${movie.year}"></td>
+                                                <td class="movie-profile-intro" th:text="${movie.introduction}"></td>
+                                                <!--<td><a th:href="@{'/editMovie?ID='+${movie.id}}" style="color:cornflowerblue">EDIT</a></td>-->
+                                                <!--<td><a th:href="@{'/deleteMovie?ID='+${movie.id}}" style="color:red">DELETE</a></td>-->
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

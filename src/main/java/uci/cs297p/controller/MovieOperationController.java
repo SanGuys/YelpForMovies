@@ -6,10 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import uci.cs297p.common.ServerResponse;
-import uci.cs297p.model.Comment;
-import uci.cs297p.model.Movie;
-import uci.cs297p.model.MovieRecordForm;
-import uci.cs297p.model.User;
+import uci.cs297p.model.*;
 import uci.cs297p.service.IUserService;
 import uci.cs297p.service.MovieOperationService;
 import uci.cs297p.service.UserServiceImpl;
@@ -24,6 +21,9 @@ public class MovieOperationController {
 
     @Autowired
     private CommentController commentController;
+
+    @Autowired
+    private IUserService userService;
 
     @RequestMapping("/")
     public String homepage(Model model){
@@ -98,4 +98,11 @@ public class MovieOperationController {
         return "Successfully Edited! \n" + movieRecordForm.toString();
     }
 
+    @RequestMapping(value="/updateCollection.do", method=RequestMethod.POST)
+    @ResponseBody
+    public String updateCollection(Integer userId, Integer movieId) {
+        ServerResponse<UMRelation> serverResponse = userService.updateCollection(new UMRelationKey(userId, movieId));
+        if(serverResponse.isSucc()) return "Succeed! \n" + serverResponse.getData();
+        return "failed";
+    }
 }

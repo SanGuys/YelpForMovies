@@ -1,8 +1,12 @@
 package uci.cs297p.service;
 
 import uci.cs297p.common.ServerResponse;
+import uci.cs297p.model.UMRelation;
+import uci.cs297p.model.UMRelationKey;
 import uci.cs297p.model.User;
 import uci.cs297p.model.UserProfileForm;
+
+import java.util.List;
 
 public interface IUserService {
     ServerResponse<User> login(String username, String password);
@@ -24,4 +28,10 @@ public interface IUserService {
     ServerResponse<User> updateUserInfo(User user, UserProfileForm userProfileForm);
 
     String getUserName(Integer userId);
+
+    ServerResponse<UMRelation> getCollection(UMRelationKey key);
+
+    ServerResponse<List<UMRelation>> getCollections(Integer userId);
+
+    ServerResponse<UMRelation> updateCollection(UMRelationKey key);
 }

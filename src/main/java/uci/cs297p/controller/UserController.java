@@ -11,11 +11,16 @@ import org.springframework.web.servlet.view.RedirectView;
 import uci.cs297p.common.Cnst;
 import uci.cs297p.common.ResponseCode;
 import uci.cs297p.common.ServerResponse;
+import uci.cs297p.model.Movie;
+import uci.cs297p.model.UMRelation;
 import uci.cs297p.model.User;
 import uci.cs297p.model.UserProfileForm;
 import uci.cs297p.service.IUserService;
+import uci.cs297p.service.MovieOperationService;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user/")
@@ -23,6 +28,9 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private MovieOperationService movieOperationService;
 
     @RequestMapping(value = "/signIn")
     public String signIn() {
@@ -35,7 +43,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String userProfile(HttpSession session) {
+    public String userProfile(HttpSession session, Model model) {
+        User user = (User) session.getAttribute(Cnst.CURRENT_USER);
+        ServerResponse<List<UMRelation>> serverResponse = userService.getCollections(user.getId());
+        List<UMRelation> umRelationList = new ArrayList<>();
+        List<Movie> movieList = new ArrayList<>();
+        if(serverResponse.isSucc()) umRelationList = serverResponse.getData();
+        for(UMRelation umRelation : umRelationList) movieList.add(movieOperationService.getMovie(umRelation.getMovieId()));
+        model.addAttribute("movieList", movieList);
         return "profile";
     }
 
@@ -145,5 +160,6 @@ public class UserController {
             }
         }
     }
+
 
 }
