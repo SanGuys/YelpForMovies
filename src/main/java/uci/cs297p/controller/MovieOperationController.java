@@ -100,7 +100,7 @@ public class MovieOperationController {
         return "Successfully Edited! \n" + movieRecordForm.toString();
     }
 
-    @RequestMapping(value="/updateCollection.do", method=RequestMethod.POST)
+    @RequestMapping(value="/updateCollection.do", method=RequestMethod.GET)
     @ResponseBody
     public String updateCollection(Integer userId, Integer movieId) {
         ServerResponse<UMRelation> serverResponse = userService.updateCollection(new UMRelationKey(userId, movieId));

@@ -4,24 +4,122 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/theme.css">
     <title>Movie Detail</title>
     <style>
+        .div-gap {
+            margin: 10px;
+        }
         .updateTime {
             color: #777777;
         }
         .unresize {
             resize: none;
         }
+        .movie-profile {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .movie-profile-name {
+            padding-top: 8px;
+            padding-bottom: 0px;
+            text-align:center;
+        }
+
+        .movie-profile-intro {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .movie-profile-pic-box {
+            height: 270px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .movie-profile-pic {
+            max-width: 100%;
+            max-height: 100%;
+            display: table-cell;
+            vertical-align: middle;
+            margin: auto;
+        }
+
+        .movie-profile-pic-box img {
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
+<!--header-->
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">YelpForMovies</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <div th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getRole() == 1}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Manage Movies
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/addMovie">Add movie</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/">Something else here</a>
+                        </div>
+                    </li>
+                </div>
+            </ul>
+            <div th:if="${session.CURRENT_USER}">
+                <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
+                    <li class="nav-item"><a class="nav-link"
+                                            th:href="@{'/user/profile?id='+${session.CURRENT_USER.getId()}}"
+                                            th:text="${session.CURRENT_USER.getUsername()}"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/logout.do">Sign Out</a></li>
+                </ul>
+                <ul class="navbar-nav d-lg-none">
+                    <li class="nav-item-divider"></li>
+                    <li class="nav-item"><a class="nav-link"
+                                            th:href="@{'/user/profile?id='+${session.CURRENT_USER.getId()}}"
+                                            th:text="${session.CURRENT_USER.getUsername()}"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/logout.do">Sign Out</a></li>
+                </ul>
+            </div>
+            <div th:unless="${session.CURRENT_USER}">
+                <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
+                    <li class="nav-item"><a class="nav-link" href="/user/signIn">Sign in</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/signUp">Sign up</a></li>
+                </ul>
+                <ul class="navbar-nav d-lg-none">
+                    <li class="nav-item-divider"></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/signIn">Sign in</a></li>
+                    <li class=" nav-item"><a class="nav-link" href="/user/signUp">Sign up</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
 <div class="container">
     <div class="row">
         <!--left column-->
         <div class="col-md-3">
-            <a href="/" class="lead">YelpForMovies</a>
             <div class="list-group">
                 <li class="list-group-item active">Science Fiction</li>
                 <li class="list-group-item">Romantic</li>
@@ -31,20 +129,35 @@
 
         <!--movie detail-->
         <div class="col-md-9">
-            <div class="thumbnail">
-                <img class="img-responsive" th:src="${movie.picturePath}" alt="movie-profile-pic">
+            <div class="thumbnail div-gap">
+                <div align="center">
+                    <img class="img-responsive" th:src="${movie.picturePath}" alt="movie-profile-pic">
+                </div>
                 <div class="caption-full">
-                    <h4><a th:text="${movie.name}"></a></h4>
+                    <h3 align="center"><strong th:text="${movie.name}"></strong></h3>
                     <p th:text="${movie.introduction}"></p>
                     <div class="row" th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getRole() == 1}">
-                        <div class="col-md-4">
-                            <a class="btn btn-warning" th:href="@{'/editMovie?ID='+${movie.id}}">
-                                Edit
-                            </a>
+                        <!--edit-->
+                        <div class="col-md-4 pull-left">
+                            <a class="btn btn-warning btn-sm" th:href="@{'/editMovie?ID='+${movie.id}}">Edit</a>
                         </div>
-                        <div class="col-md-2 pull-right">
+                        <!--like-->
+                        <div class="col-md-4">
+                            <form class="delete-form" action='/updateCollection.do' method="POST">
+                                <div class="form-group" hidden>
+                                    <input class="form-control" type="text" name="userId" value=${session.CURRENT_USER.getId()} hidden>
+                                </div>
+                                <div class="form-group" hidden>
+                                    <input class="form-control" type="text" name="movieId" value=${movie.id} hidden>
+                                </div>
+                                <button class="btn btn-primary btn-sm">Like</button>
+                            </form>
+                            <a class="btn btn-primary btn-sm" th:href="@{'/updateCollection.do?userId='+${session.CURRENT_USER.getId()}+'&movieId='+${movie.id}}">Like</a>
+                        </div>
+                        <!--delete-->
+                        <div class="col-md-4 pull-right">
                             <form class="delete-form" th:action="@{'/deleteMovie?ID='+${movie.id}}" method="POST">
-                                <button class="btn btn-danger">Delete</button>
+                                <button class="btn btn-danger btn-sm">Delete</button>
                             </form>
                         </div>
                     </div>
@@ -52,12 +165,12 @@
             </div>
 
             <!--comment part-->
-            <div class="well">
+            <div class="jumbotron div-gap">
                 <!--add a comment-->
-                <div class="text-right" th:if="${session.CURRENT_USER != null}">
+                <div class="text-right div-gap" th:if="${session.CURRENT_USER != null}">
                     <form title="Comment" action="/comment/add.do" method="post">
                         <input type="hidden" name="movieId" th:value="${movie.id}">
-                        <textarea class="form-control unresize" cols="200" rows="5" name="content"
+                        <textarea class="form-control unresize" name="content"
                                   placeholder="Say something..."></textarea>
                         <button class="btn btn-success">Add new comment</button>
                     </form>
@@ -65,7 +178,7 @@
                 <hr>
 
                 <!--show comments-->
-                <div class="row">
+                <div class="row" div-gap>
                     <div class="col-md-12" th:each="comment, iterStat: ${commentList}">
                         <!--show username, comment and update time-->
                         <strong th:text="${userNamesOfCommentList[iterStat.index]}"></strong>
@@ -73,11 +186,19 @@
                         <p th:text='${comment.content}'></p>
 
                         <!--delete your comment-->
-                        <div th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getId() == userIdsOfCommentList[iterStat.index]}">
-                            <form class="delete-form" th:action="@{'/comment/delete.do?ID='+${comment.id}}" method="POST">
-                                <button class="btn btn-danger">Delete your comment</button>
-                            </form>
+                        <div class="row" th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getId() == userIdsOfCommentList[iterStat.index]}">
+                            <!--<div class="col-md-4">-->
+                                <!--<a class="btn btn-warning">-->
+                                    <!--Edit-->
+                                <!--</a>-->
+                            <!--</div>-->
+                            <div class="col-md-2 pull-right">
+                                <form class="delete-form" th:action="@{'/comment/delete.do?ID='+${comment.id}}" method="POST">
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </div>
                         </div>
+
                         <br>
                     </div>
                 </div>
