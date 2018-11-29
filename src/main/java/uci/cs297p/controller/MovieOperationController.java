@@ -100,11 +100,22 @@ public class MovieOperationController {
         return "Successfully Edited! \n" + movieRecordForm.toString();
     }
 
-    @RequestMapping(value="/updateCollection.do", method=RequestMethod.GET)
+    @RequestMapping(value="/getCollection.do", method=RequestMethod.GET)
+    @ResponseBody
+    public String getCollection(Integer userId, Integer movieId, Model model) {
+        ServerResponse<UMRelation> serverResponse = userService.getCollection(new UMRelationKey(movieId, userId));
+        if(serverResponse.isSucc()) {
+            model.addAttribute("umRelation", (UMRelation) serverResponse.getData());
+            return "succeed";
+        }
+        return "failed";
+    }
+
+    @RequestMapping(value="/updateCollection.do", method=RequestMethod.POST)
     @ResponseBody
     public String updateCollection(Integer userId, Integer movieId) {
         ServerResponse<UMRelation> serverResponse = userService.updateCollection(new UMRelationKey(movieId, userId));
-        if(serverResponse.isSucc()) return "Succeed! \n" + serverResponse.getData();
+        if(serverResponse.isSucc()) return "succeed! \n" + serverResponse.getData();
         return "failed";
     }
 }
