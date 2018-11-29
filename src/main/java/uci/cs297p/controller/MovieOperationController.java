@@ -103,7 +103,7 @@ public class MovieOperationController {
     @RequestMapping(value="/updateCollection.do", method=RequestMethod.GET)
     @ResponseBody
     public String updateCollection(Integer userId, Integer movieId) {
-        ServerResponse<UMRelation> serverResponse = userService.updateCollection(new UMRelationKey(userId, movieId));
+        ServerResponse<UMRelation> serverResponse = userService.updateCollection(new UMRelationKey(movieId, userId));
         if(serverResponse.isSucc()) return "Succeed! \n" + serverResponse.getData();
         return "failed";
     }

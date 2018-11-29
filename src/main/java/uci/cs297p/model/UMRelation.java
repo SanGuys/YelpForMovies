@@ -88,4 +88,12 @@ public class UMRelation extends UMRelationKey {
     public void setRating(Integer rating) {
         this.rating = rating;
     }
+
+    @Override
+    public String toString() {
+        return "UMRelation{" +
+                "collected=" + collected +
+                ", rating=" + rating +
+                '}';
+    }
 }
