@@ -5,7 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
-    <!--<script src="../styles/vue.js"></script>-->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -157,16 +156,17 @@
                             <div class="form-group" hidden>
                                 <input class="form-control" type="text" name="movieId" th:value="${movie.id}">
                             </div>
-                            <button class="btn btn-primary btn-sm">Like</button>
+                            <button><img src="https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-favorite_border-black-18/2x/baseline_favorite_border_black_18dp.png"></button>
+                            <!--<button class="btn btn-primary btn-sm">Like</button>-->
                         </form>
 
                         <!--rating-->
                     </div>
 
                     <!--test-->
-                    <div id='root'>
-                        <child :count="${}" @inc='handleIncrease'></child>
-                    </div>
+                    <!--<div id='root'>-->
+                        <!--<child :count="${}" @inc='handleIncrease'></child>-->
+                    <!--</div>-->
                 </div>
 
                 <div class="caption-full">
@@ -178,11 +178,10 @@
                     <br>
                     <div class="row" th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getRole() == 1}">
                         <!--edit-->
-                        <a class="btn btn-warning btn-sm" th:href="@{'/editMovie?ID='+${movie.id}}">Edit</a>
-
+                        <button><a th:href="@{'/editMovie?ID='+${movie.id}}"><img src="https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-edit-black-18/2x/baseline_edit_black_18dp.png"></a></button>
                         <!--delete-->
                         <form class="delete-form" th:action="@{'/deleteMovie?ID='+${movie.id}}" method="POST">
-                            <button class="btn btn-danger btn-sm">Delete</button>
+                            <button><img src="https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-delete-black-18/2x/baseline_delete_black_18dp.png"></button>
                         </form>
                     </div>
                 </div>
@@ -231,6 +230,7 @@
         </div>
     </div>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
