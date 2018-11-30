@@ -218,5 +218,22 @@ public class UserServiceImpl implements IUserService {
         }
         return ServerResponse.failWithMsg("update failed!");
     }
+
+    @Override
+    public ServerResponse<UMRelation> updateRating(UMRelationKey key, Integer score) {
+        UMRelation recordInDB = umRelationMapper.selectByPrimaryKey(key);
+        if (recordInDB == null) {
+            recordInDB = new UMRelation(key.getMovieId(), key.getUserId(), Cnst.CollectionStatus.COLLECTION_FALSE, score);
+            if(umRelationMapper.insertSelective(recordInDB) > 0) {
+                return ServerResponse.succWithMsgData("update success!", recordInDB);
+            }
+        } else{
+            recordInDB.setRating(score);
+            if(umRelationMapper.updateByPrimaryKeySelective(recordInDB) > 0){
+                return ServerResponse.succWithMsgData("update success!", recordInDB);
+            }
+        }
+        return ServerResponse.failWithMsg("update failed!");
+    }
 }
 

@@ -34,4 +34,6 @@ public interface IUserService {
     ServerResponse<List<UMRelation>> getCollections(Integer userId);
 
     ServerResponse<UMRelation> updateCollection(UMRelationKey key);
+
+    ServerResponse<UMRelation> updateRating(UMRelationKey key, Integer score);
 }
