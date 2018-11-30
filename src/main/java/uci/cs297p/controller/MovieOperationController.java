@@ -113,8 +113,10 @@ public class MovieOperationController {
 
     @RequestMapping(value="/updateCollection.do", method=RequestMethod.POST)
     @ResponseBody
-    public String updateCollection(Integer userId, Integer movieId) {
-        ServerResponse<UMRelation> serverResponse = userService.updateCollection(new UMRelationKey(movieId, userId));
+    public String updateCollection(String userId, String movieId) {
+        System.out.println(userId);
+        System.out.println(movieId);
+        ServerResponse<UMRelation> serverResponse = userService.updateCollection(new UMRelationKey(Integer.valueOf(movieId), Integer.valueOf(userId)));
         if(serverResponse.isSucc()) return "succeed! \n" + serverResponse.getData();
         return "failed";
     }

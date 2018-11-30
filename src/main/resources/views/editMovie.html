@@ -4,13 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+
     <title>Edit the Movie</title>
 </head>
 <body>
 <div class="container">
     <div class="row">
         <h1 align="center">Edit the Movie</h1>
-        <div style="width: 30%; margin: 25px auto;">
+        <div id='app' style="width: 30%; margin: 25px auto;">
             <form align='center' th:action="@{'/editMovieSubmit?ID='+${movie.id}}" method="post" th:object="${movieRecordForm}">
                 <div hidden class="form-group">
                     <input class="form-control" type="text" name="id" th:field="${movie.id}">
@@ -32,9 +34,46 @@
                 </div>
                 <a href="/">Go back</a>
             </form>
+            <button @click="handleBtnClick">Submit!</button>
         </div>
-
     </div>
 </div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
+<script>
+    function MovieRecordForm() {
+        this.name = 'test1';
+        this.year = '1991';
+        this.introduction = '1';
+        this.picturePath = '2';
+    }
+    var sample1 = new MovieRecordForm();
+    var editMovieUrl = '/editMovieSubmit?ID=22';
+    var o = {
+        name: 'test1',
+        year: '1991',
+        introduction: '1',
+        picturePath: '2',
+    }
+
+    var vm = new Vue({
+        el: '#app',
+        methods: {
+            handleBtnClick: function() {
+                console.log('handle clicking')
+                axios.post(editMovieUrl, Qs.stringify(o))
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
+    })
+
+</script>
+
 </body>
 </html>
