@@ -15,6 +15,11 @@
         }
         .updateTime {
             color: #777777;
+            float: right;
+        }
+        .comment-content {
+            padding-left: 2em;
+            /*background-color: darkseagreen;*/
         }
         .unresize {
             resize: none;
@@ -134,8 +139,12 @@
                     <img class="img-responsive" th:src="${movie.picturePath}" alt="movie-profile-pic">
                 </div>
                 <div class="caption-full">
-                    <h3 align="center"><strong th:text="${movie.name}"></strong></h3>
+                    <br>
+                    <br>
+                    <h3 align="left"><strong th:text="${movie.name} + ' ('+${movie.year}+')'"></strong></h3>
+                    <br>
                     <p th:text="${movie.introduction}"></p>
+                    <br>
                     <div class="row" th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getRole() == 1}">
                         <!--edit-->
                         <div class="col-md-4 pull-left">
@@ -170,20 +179,27 @@
                 <div class="text-right div-gap" th:if="${session.CURRENT_USER != null}">
                     <form title="Comment" action="/comment/add.do" method="post">
                         <input type="hidden" name="movieId" th:value="${movie.id}">
-                        <textarea class="form-control unresize" name="content"
-                                  placeholder="Say something..."></textarea>
-                        <button class="btn btn-success">Add new comment</button>
+                        <textarea class="form-control unresize" id="userInput" name="content"
+                                  placeholder="Say something..." required="required" onkeyup="checkEmpty()"></textarea>
+                        <br>
+                        <button class="btn btn-success" id="post">Post</button>
                     </form>
                 </div>
-                <hr>
+
+                <div>
+                    <h2>
+                        Comments
+                    </h2>
+                </div>
 
                 <!--show comments-->
                 <div class="row" div-gap>
                     <div class="col-md-12" th:each="comment, iterStat: ${commentList}">
+                        <hr>
                         <!--show username, comment and update time-->
                         <strong th:text="${userNamesOfCommentList[iterStat.index]}"></strong>
-                        <span class="pull-right updateTime" th:text="'Update time: ' + ${comment.updateTime}"></span>
-                        <p th:text='${comment.content}'></p>
+                        <span class="updateTime" th:text="'Update time: ' + ${comment.updateTime}"></span>
+                        <p class="comment-content" th:utext='${#strings.replace(comment.content,"&#10;", "&lt;br&gt;")}'></p>
 
                         <!--delete your comment-->
                         <div class="row" th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getId() == userIdsOfCommentList[iterStat.index]}">
@@ -206,6 +222,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    function checkEmpty() {
+        var userInput = document.getElementById("userInput").value.trim();
+        if (userInput == '') {
+            document.getElementById("post").disabled = true;
+        } else {
+            document.getElementById("post").disabled = false;
+        }
+    }
+</script>
 
 </body>
 </html>
