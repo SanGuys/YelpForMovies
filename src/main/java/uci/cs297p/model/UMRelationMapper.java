@@ -57,5 +57,7 @@ public interface UMRelationMapper {
      */
     int updateByPrimaryKey(UMRelation record);
 
+    int updateOrDeleteByPrimaryKeySelective(UMRelation record);
+
     List<UMRelation> getCollectionsByUserId(Integer userId);
 }
