@@ -122,6 +122,27 @@
       and user_id = #{userId,jdbcType=INTEGER}
   </update>
 
+  <update id="updateOrDeleteByPrimaryKeySelective" parameterType="uci.cs297p.model.UMRelation">
+    <choose>
+      <when test="collected != 0 and rating != null">
+        update u_m_relation
+        <set>
+          <if test="collected != null">
+            collected = #{collected,jdbcType=INTEGER},
+          </if>
+          <if test="rating != null">
+            rating = #{rating,jdbcType=INTEGER},
+          </if>
+        </set>
+      </when>
+      <otherwise>
+        delete from u_m_relation
+      </otherwise>
+    </choose>
+    where movie_id = #{movieId,jdbcType=INTEGER}
+    and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
   <select id="getCollectionsByUserId" parameterType="int" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

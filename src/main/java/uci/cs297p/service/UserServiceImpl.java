@@ -19,6 +19,9 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private UMRelationMapper umRelationMapper;
 
+    @Autowired
+    private MovieMapper movieMapper;
+
     @Override
     public ServerResponse<User> login(String username, String password) {
         //User user in session doesn't have the password.
@@ -205,15 +208,9 @@ public class UserServiceImpl implements IUserService {
                 return ServerResponse.succWithMsgData("update success!", recordInDB);
             }
         } else{
-            if (recordInDB.getCollected() == Cnst.CollectionStatus.COLLECTION_TRUE && recordInDB.getRating() == null) {
-                if(umRelationMapper.deleteByPrimaryKey(key) > 0) {
-                    return ServerResponse.succWithMsgData("update success!", null);
-                }
-            } else {
-                recordInDB.setCollected(1 - recordInDB.getCollected());
-                if(umRelationMapper.updateByPrimaryKeySelective(recordInDB) > 0){
-                    return ServerResponse.succWithMsgData("update success!", recordInDB);
-                }
+            recordInDB.setCollected(1 - recordInDB.getCollected());
+            if(umRelationMapper.updateOrDeleteByPrimaryKeySelective(recordInDB) > 0){
+                return ServerResponse.succWithMsgData("update success!", recordInDB);
             }
         }
         return ServerResponse.failWithMsg("update failed!");
@@ -222,15 +219,35 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ServerResponse<UMRelation> updateRating(UMRelationKey key, Integer score) {
         UMRelation recordInDB = umRelationMapper.selectByPrimaryKey(key);
-        if (recordInDB == null) {
-            recordInDB = new UMRelation(key.getMovieId(), key.getUserId(), Cnst.CollectionStatus.COLLECTION_FALSE, score);
-            if(umRelationMapper.insertSelective(recordInDB) > 0) {
-                return ServerResponse.succWithMsgData("update success!", recordInDB);
+        Movie movie = movieMapper.selectByPrimaryKey(recordInDB.getMovieId());
+        if(movie != null) {
+            boolean flag = false;
+            float total = movie.getRating() * movie.getRatingNumber();
+            int number = movie.getRatingNumber();
+            // bug: should open transaction
+            if (recordInDB == null) {
+                recordInDB = new UMRelation(key.getMovieId(), key.getUserId(), Cnst.CollectionStatus.COLLECTION_FALSE, score);
+                if(umRelationMapper.insertSelective(recordInDB) > 0) {
+                    flag = true;
+                    number++;
+                    total += score;
+                }
+            } else{
+                if(recordInDB.getRating() == 0 || recordInDB.getRating() == null) {
+                    number++;
+                    total = total + score;
+                } else {
+                    total = total + score - recordInDB.getRating();
+                }
+                recordInDB.setRating(score);
+                if(umRelationMapper.updateByPrimaryKeySelective(recordInDB) > 0) flag = true;
             }
-        } else{
-            recordInDB.setRating(score);
-            if(umRelationMapper.updateByPrimaryKeySelective(recordInDB) > 0){
-                return ServerResponse.succWithMsgData("update success!", recordInDB);
+            if(flag) {
+                movie.setRating(total / number);
+                movie.setRatingNumber(number);
+                if(movieMapper.updateByPrimaryKeySelective(movie) > 0) {
+                    return ServerResponse.succWithMsgData("update success!", recordInDB);
+                }
             }
         }
         return ServerResponse.failWithMsg("update failed!");
