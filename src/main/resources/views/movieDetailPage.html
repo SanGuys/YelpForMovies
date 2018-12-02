@@ -2,6 +2,11 @@
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 
+<!--global hidden variables-->
+<input hidden type="text" th:value="${session.CURRENT_USER.getId()}" id="globalUserId">
+<input hidden type="text" th:value="${movie.id}" id="globalMovieId">
+<input hidden type="text" th:value="${movie.getName()}" id="globalMovieName">
+
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
@@ -11,7 +16,7 @@
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./css/theme.css">
 
-    <title>Movie Detail</title>
+    <title id="title">{{movieName}}</title>
     <style>
         .div-gap {
             margin: 10px;
@@ -66,6 +71,7 @@
     </style>
 </head>
 <body>
+
 <!--header-->
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -147,20 +153,24 @@
                         <img class="img-responsive" th:src="${movie.picturePath}" alt="movie-profile-pic">
                     </div>
 
-                    <!--show rating-->
+                    <!--collection and rating-->
                     <div class="col-md-4">
                         <span th:text="'YelpForMovie Rating: ' + ${movie.getRating()}"></span>
-
                         <div id="collection" th:if="${session.CURRENT_USER != null}">
                             <!--collection button-->
-                            <input hidden type="text" th:value="${session.CURRENT_USER.getId()}" id="globalUserId">
-                            <input hidden type="text" th:value="${movie.id}" id="globalMovieId">
-
                             <img :src="current_icon_path" @click="handleSwitchClick">
+                        </div>
+                        <div id="rating" th:if="${session.CURRENT_USER != null}">
                             <!--your rating-->
-                            <!--<form th:action="@{'/updateRating.do?userId='+${session.CURRENT_USER.getId()}+'&movieId='+${movie.getId()}+'&score=5'}" th:object="">-->
-                            <!---->
-                            <!--</form>-->
+                            <span>
+                                <select id="scoreInputId">
+                                    <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+                                </select>
+                                <!--<input type="number" placeholder="Put your score here" min="1" max="10" step="1" id="scoreInputId"/>-->
+                            </span>
+                            <span>
+                                <button @click="handleBtnClick">Submit your score!</button>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -197,11 +207,7 @@
                     </form>
                 </div>
 
-                <div>
-                    <h2>
-                        Comments
-                    </h2>
-                </div>
+                <div><h2>Comments</h2></div>
 
                 <!--show comments-->
                 <div class="row" div-gap>
@@ -241,6 +247,37 @@
 
 
 <script>
+    var ratingVM = new Vue({
+        el: "#rating",
+        methods: {
+            handleBtnClick: function() {
+                var o = {
+                    userId: $("#globalUserId").val(),
+                    movieId: $("#globalMovieId").val(),
+                    score: $("#scoreInputId").val()
+                };
+                axios.post('/updateRating.do', Qs.stringify(o))
+                    .then(function (response) {
+                        console.log(response);
+                        alert('Score updated!')
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert('Score error')
+                    });
+            }
+        }
+    });
+
+
+    var titleVM = new Vue({
+        el: "#title",
+        data: {
+            movieName: $("#globalMovieName").val()
+        }
+    });
+
+
     // collection button
     var collectionVM = new Vue({
         el: "#collection",
