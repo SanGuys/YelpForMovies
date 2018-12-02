@@ -327,4 +327,19 @@ public class Movie {
     public void setRatingNumber(Integer ratingNumber) {
         this.ratingNumber = ratingNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", year=" + year +
+                ", introduction='" + introduction + '\'' +
+                ", picturePath='" + picturePath + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", rating=" + rating +
+                ", ratingNumber=" + ratingNumber +
+                '}';
+    }
 }

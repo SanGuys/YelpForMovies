@@ -233,7 +233,7 @@ public class UserServiceImpl implements IUserService {
                     total += score;
                 }
             } else{
-                if(recordInDB.getRating() == 0 || recordInDB.getRating() == null) {
+                if(recordInDB.getRating() == null || recordInDB.getRating() == 0) {
                     number++;
                     total = total + score;
                 } else {
