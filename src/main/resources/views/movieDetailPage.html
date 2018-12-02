@@ -124,6 +124,7 @@
     </nav>
 </div>
 
+<!--body-->
 <div class="container">
     <div class="row">
         <!--left column-->
@@ -138,7 +139,6 @@
         <!--movie detail-->
         <div class="col-md-9">
             <div class="thumbnail div-gap">
-                <!--first row-->
                 <div class="row">
                     <!--dummy col-->
                     <div class="col-md-4"></div>
@@ -146,29 +146,26 @@
                     <div class="col-md-4">
                         <img class="img-responsive" th:src="${movie.picturePath}" alt="movie-profile-pic">
                     </div>
-                    <!--show movie like button and rating-->
-                    <div class="col-md-4" th:if="${session.CURRENT_USER != null}">
-                        <!--like button-->
-                        <form class="delete-form" action='/updateCollection.do' method="POST">
-                            <div class="form-group" hidden>
-                                <input class="form-control" type="text" name="userId" th:value="${session.CURRENT_USER.getId()}">
-                            </div>
-                            <div class="form-group" hidden>
-                                <input class="form-control" type="text" name="movieId" th:value="${movie.id}">
-                            </div>
-                            <button><img src="https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-favorite_border-black-18/2x/baseline_favorite_border_black_18dp.png"></button>
-                            <!--<button class="btn btn-primary btn-sm">Like</button>-->
-                        </form>
 
-                        <!--rating-->
+                    <!--show rating-->
+                    <div class="col-md-4">
+                        <span th:text="'YelpForMovie Rating: ' + ${movie.getRating()}"></span>
+
+                        <div id="collection" th:if="${session.CURRENT_USER != null}">
+                            <!--collection button-->
+                            <input hidden type="text" th:value="${session.CURRENT_USER.getId()}" id="globalUserId">
+                            <input hidden type="text" th:value="${movie.id}" id="globalMovieId">
+
+                            <img :src="current_icon_path" @click="handleSwitchClick">
+                            <!--your rating-->
+                            <!--<form th:action="@{'/updateRating.do?userId='+${session.CURRENT_USER.getId()}+'&movieId='+${movie.getId()}+'&score=5'}" th:object="">-->
+                            <!---->
+                            <!--</form>-->
+                        </div>
                     </div>
-
-                    <!--test-->
-                    <!--<div id='root'>-->
-                        <!--<child :count="${}" @inc='handleIncrease'></child>-->
-                    <!--</div>-->
                 </div>
 
+                <!--edit and delete buttons for admins-->
                 <div class="caption-full">
                     <br>
                     <br>
@@ -242,39 +239,64 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 
-<script>
-    var child = {
-        props: ['count'],
-        data: function() {
-            return {
-                number: this.count
-            }
-        },
-        template: '<div @click="handleClick">123</div>',
-        methods: {
-            handleClick: function() {
-                this.$emit('inc', this.number)
-            }
-        },
-    }
 
-    var vm = new Vue({
-        el: '#root',
+<script>
+    // collection button
+    var collectionVM = new Vue({
+        el: "#collection",
         data: {
-            userId: ""
+            favorite_icon_path: "https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-favorite-black-18/2x/baseline_favorite_black_18dp.png",
+            favorite_border_icon_path: "https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-favorite_border-black-18/2x/baseline_favorite_border_black_18dp.png",
+
+            current_collect: false,
+            current_icon_path: ""
         },
-        components: {
-            child: child
+        created: function() {
+            // if($("#globalUserId").val() != null && $("#globalMovieId").val() != null) {
+            //     var userId = $("#globalUserId").val();
+            //     var movieId = $("#globalMovieId").val();
+            //
+            //     axios.get('/getCollection.do', {
+            //         params: {
+            //             userId: userId,
+            //             movieId: movieId,
+            //         }
+            //     })
+            //         .then(function (response) {
+            //             console.log(response);
+            //         })
+            //         .catch(function (error) {
+            //             console.log(error);
+            //             alert(error);
+            //         });
+            // }
+            this.current_icon_path = this.favorite_border_icon_path;
         },
         methods: {
-            handleIncrease: function(step) {
-                this.userId = step
-                alert(this.userId)
+            handleSwitchClick: function() {
+                // switch collection icon
+                if(this.current_collect) {
+                    this.current_icon_path = this.favorite_border_icon_path;
+                } else {
+                    this.current_icon_path = this.favorite_icon_path;
+                }
+                this.current_collect = !this.current_collect;
+
+                // update collection info
+                var o = {
+                    userId: $("#globalUserId").val(),
+                    movieId: $("#globalMovieId").val()
+                };
+                axios.post("/updateCollection.do", Qs.stringify(o))
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             }
         }
-    })
-
-
+    });
 
     function checkEmpty() {
         var userInput = document.getElementById("userInput").value.trim();
