@@ -3,7 +3,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <!--global hidden variables-->
-<input hidden type="text" th:value="${session.CURRENT_USER.getId()}" id="globalUserId">
 <input hidden type="text" th:value="${movie.id}" id="globalMovieId">
 <input hidden type="text" th:value="${movie.getName()}" id="globalMovieName">
 
@@ -68,6 +67,7 @@
         .movie-profile-pic-box img {
             vertical-align: middle;
         }
+
     </style>
 </head>
 <body>
@@ -133,15 +133,6 @@
 <!--body-->
 <div class="container">
     <div class="row">
-        <!--left column-->
-        <div class="col-md-3">
-            <div class="list-group">
-                <li class="list-group-item active">Science Fiction</li>
-                <li class="list-group-item">Romantic</li>
-                <li class="list-group-item">Animation</li>
-            </div>
-        </div>
-
         <!--movie detail-->
         <div class="col-md-9">
             <div class="thumbnail div-gap">
@@ -161,12 +152,14 @@
                             <img :src="current_icon_path" @click="handleSwitchClick">
                         </div>
                         <div id="rating" th:if="${session.CURRENT_USER != null}">
+                            <!--necessary userId-->
+                            <input hidden type="text" th:value="${session.CURRENT_USER.getId()}" id="globalUserId">
+
                             <!--your rating-->
                             <span>
                                 <select id="scoreInputId">
                                     <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
                                 </select>
-                                <!--<input type="number" placeholder="Put your score here" min="1" max="10" step="1" id="scoreInputId"/>-->
                             </span>
                             <span>
                                 <button @click="handleBtnClick">Submit your score!</button>
@@ -286,28 +279,27 @@
             favorite_border_icon_path: "https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-favorite_border-black-18/2x/baseline_favorite_border_black_18dp.png",
 
             current_collect: false,
-            current_icon_path: ""
+            current_icon_path: "https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-favorite_border-black-18/2x/baseline_favorite_border_black_18dp.png"
         },
-        created: function() {
-            // if($("#globalUserId").val() != null && $("#globalMovieId").val() != null) {
-            //     var userId = $("#globalUserId").val();
-            //     var movieId = $("#globalMovieId").val();
-            //
-            //     axios.get('/getCollection.do', {
-            //         params: {
-            //             userId: userId,
-            //             movieId: movieId,
-            //         }
-            //     })
-            //         .then(function (response) {
-            //             console.log(response);
-            //         })
-            //         .catch(function (error) {
-            //             console.log(error);
-            //             alert(error);
-            //         });
-            // }
-            this.current_icon_path = this.favorite_border_icon_path;
+        mounted: function() {
+            if($("#globalUserId").val() != null && $("#globalMovieId").val() != null) {
+                axios.get('/getCollection.do', {
+                    params: {
+                        userId: $("#globalUserId").val(),
+                        movieId: $("#globalMovieId").val(),
+                    }
+                })
+                .then(response => {
+                    console.log(response);
+                    if(response.data.umRelation != null && response.data.umRelation.collected == 1) {
+                        this.current_collect = true;
+                        this.current_icon_path = "https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-favorite-black-18/2x/baseline_favorite_black_18dp.png";
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            }
         },
         methods: {
             handleSwitchClick: function() {
