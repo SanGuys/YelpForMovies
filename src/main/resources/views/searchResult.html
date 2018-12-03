@@ -119,7 +119,7 @@
             <th style="width:20%">Name</th>
             <th style="width:10%">Year</th>
             <th style="width:50%">Introduction</th>
-            <!--<th style="width:10%">EDIT</th>-->
+            <th style="width:10%">Rating</th>
             <!--<th style="width:10%">DELETE</th>-->
         </tr>
         </thead>
@@ -136,6 +136,7 @@
             </td>
             <td th:text="${movie.year}"></td>
             <td class="movie-profile-intro" th:text="${movie.introduction}"></td>
+            <td class="movie-profile-rating" th:text="${movie.rating}"></td>
             <!--<td><a th:href="@{'/editMovie?ID='+${movie.id}}" style="color:cornflowerblue">EDIT</a></td>-->
             <!--<td><a th:href="@{'/deleteMovie?ID='+${movie.id}}" style="color:red">DELETE</a></td>-->
         </tr>
