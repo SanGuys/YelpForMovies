@@ -12,7 +12,9 @@ import uci.cs297p.service.MovieOperationService;
 import uci.cs297p.service.UserServiceImpl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MovieOperationController {
@@ -102,13 +104,15 @@ public class MovieOperationController {
 
     @RequestMapping(value="/getCollection.do", method=RequestMethod.GET)
     @ResponseBody
-    public String getCollection(Integer userId, Integer movieId, Model model) {
+    public Map<String, Object> getCollection(Integer userId, Integer movieId, Model model) {
+        Map<String, Object> map = new HashMap<>();
         ServerResponse<UMRelation> serverResponse = userService.getCollection(new UMRelationKey(movieId, userId));
         if(serverResponse.isSucc()) {
-            model.addAttribute("umRelation", (UMRelation) serverResponse.getData());
-            return "succeed";
-        }
-        return "failed";
+//            model.addAttribute("umRelation", (UMRelation) serverResponse.getData());
+            map.put("umRelation", (UMRelation) serverResponse.getData());
+        } else
+            map.put("umRelation", null);
+        return map;
     }
 
     @RequestMapping(value="/updateCollection.do", method=RequestMethod.POST)

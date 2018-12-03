@@ -92,7 +92,9 @@ public class UMRelation extends UMRelationKey {
     @Override
     public String toString() {
         return "UMRelation{" +
-                "collected=" + collected +
+                "userId=" + this.getUserId() +
+                ", movieId=" + this.getMovieId() +
+                ", collected=" + collected +
                 ", rating=" + rating +
                 '}';
     }

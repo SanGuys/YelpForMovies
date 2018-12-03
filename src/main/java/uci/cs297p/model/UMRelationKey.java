@@ -87,4 +87,12 @@ public class UMRelationKey {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "UMRelationKey{" +
+                "movieId=" + movieId +
+                ", userId=" + userId +
+                '}';
+    }
 }
