@@ -81,7 +81,7 @@
                                        value="Discard Changes"/>
                             </div>
                             <div class="pull-right">
-                                <a class="btn btn-warning" th:href="@{'/user/profile/update'}">
+                                <a class="btn btn-warning" th:href="@{'/user/profile/update/' + ${session.CURRENT_USER.getId()}}">
                                     Edit
                                 </a>
                             </div>

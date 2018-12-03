@@ -44,14 +44,14 @@
             <div th:if="${session.CURRENT_USER}">
                 <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
                     <li class="nav-item"><a class="nav-link"
-                                            th:href="@{'/user/profile?id='+${session.CURRENT_USER.getId()}}"
+                                            th:href="@{'/user/profile/'+${session.CURRENT_USER.getId()}}"
                                             th:text="${session.CURRENT_USER.getUsername()}"></a></li>
                     <li class="nav-item"><a class="nav-link" href="/user/logout.do">Sign Out</a></li>
                 </ul>
                 <ul class="navbar-nav d-lg-none">
                     <li class="nav-item-divider"></li>
                     <li class="nav-item"><a class="nav-link"
-                                            th:href="@{'/user/profile?id='+${session.CURRENT_USER.getId()}}"
+                                            th:href="@{'/user/profile/'+${session.CURRENT_USER.getId()}}"
                                             th:text="${session.CURRENT_USER.getUsername()}"></a></li>
                     <li class="nav-item"><a class="nav-link" href="/user/logout.do">Sign Out</a></li>
                 </ul>
@@ -77,7 +77,7 @@
             <h2>Update User Profile</h2>
         </div>
         <div style="width: 30%; margin: 25px auto;">
-            <form th:action="@{'/user/profile'}" method="POST" th:object="${userProfileForm}">
+            <form th:action="@{'/user/profile/' + ${user.id}}" method="POST" th:object="${userProfileForm}">
                 <input type="hidden" name="_method" value="PUT">
 
                 <div hidden class="form-group">
@@ -121,7 +121,7 @@
                     <button class="btn btn-lg btn-default btn-primary btn-block" id="submit">Submit!</button>
                 </div>
             </form>
-            <a href="/user/profile">Go back</a>
+            <a th:href="@{'/user/profile/' + ${user.id}}">Go back</a>
         </div>
 
     </div>

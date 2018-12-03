@@ -4,6 +4,7 @@ package uci.cs297p.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,31 +43,34 @@ public class UserController {
         return "signUp";
     }
 
-    @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String userProfile(HttpSession session, Model model) {
-        User user = (User) session.getAttribute(Cnst.CURRENT_USER);
-        ServerResponse<List<UMRelation>> serverResponse = userService.getCollections(user.getId());
+    @RequestMapping(value = "/profile/{userId}", method = RequestMethod.GET)
+    public String userProfile(@PathVariable("userId") Integer userId, Model model) {
+        ServerResponse<List<UMRelation>> serverResponse = userService.getCollections(userId);
         List<UMRelation> umRelationList = new ArrayList<>();
         List<Movie> movieList = new ArrayList<>();
         if(serverResponse.isSucc()) umRelationList = serverResponse.getData();
-        for(UMRelation umRelation : umRelationList) movieList.add(movieOperationService.getMovie(umRelation.getMovieId()));
+        for(UMRelation umRelation : umRelationList) {
+            Movie movie = movieOperationService.getMovie(umRelation.getMovieId());
+            if(movie != null) movieList.add(movie);
+        }
         model.addAttribute("movieList", movieList);
         return "profile";
     }
 
-    @RequestMapping(value="/profile/update", method = RequestMethod.GET)
+    @RequestMapping(value="/profile/update/{userId}", method = RequestMethod.GET)
     public String userProfileUpdate(HttpSession session, Model model){
         User user = (User) session.getAttribute(Cnst.CURRENT_USER);
         model.addAttribute("user", user);
         return "editProfile";
     }
 
-    @RequestMapping(value="/profile", method=RequestMethod.PUT)
-    public RedirectView userProfileUpdateSubmit(HttpSession session, UserProfileForm userProfileForm) {
+    @RequestMapping(value="/profile/{userId}", method=RequestMethod.PUT)
+    public RedirectView userProfileUpdateSubmit(@PathVariable("userId") Integer userId, HttpSession session, UserProfileForm userProfileForm) {
         User user = (User) session.getAttribute(Cnst.CURRENT_USER);
+        if(user == null || user.getId() != userId) return null;
         ServerResponse serverResponse = userService.updateUserInfo(user, userProfileForm);
         if (serverResponse.isSucc()) session.setAttribute(Cnst.CURRENT_USER, serverResponse.getData());
-        return new RedirectView("/user/profile");
+        return new RedirectView("/user/profile/" + userId);
     }
 
     //Verified

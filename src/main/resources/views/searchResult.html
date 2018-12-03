@@ -71,14 +71,14 @@
             <div th:if="${session.CURRENT_USER}">
                 <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
                     <li class="nav-item"><a class="nav-link"
-                                            th:href="@{'/user/profile?id='+${session.CURRENT_USER.getId()}}"
+                                            th:href="@{'/user/profile/'+${session.CURRENT_USER.getId()}}"
                                             th:text="${session.CURRENT_USER.getUsername()}"></a></li>
                     <li class="nav-item"><a class="nav-link" href="/user/logout.do">Sign Out</a></li>
                 </ul>
                 <ul class="navbar-nav d-lg-none">
                     <li class="nav-item-divider"></li>
                     <li class="nav-item"><a class="nav-link"
-                                            th:href="@{'/user/profile?id='+${session.CURRENT_USER.getId()}}"
+                                            th:href="@{'/user/profile/'+${session.CURRENT_USER.getId()}}"
                                             th:text="${session.CURRENT_USER.getUsername()}"></a></li>
                     <li class="nav-item"><a class="nav-link" href="/user/logout.do">Sign Out</a></li>
                 </ul>
