@@ -178,10 +178,10 @@
                     <br>
                     <div class="row" th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getRole() == 1}">
                         <!--edit-->
-                        <button><a th:href="@{'/editMovie?ID='+${movie.id}}"><img src="https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-edit-black-18/2x/baseline_edit_black_18dp.png"></a></button>
+                        <button><a th:href="@{'/editMovie?ID='+${movie.id}}"><img src="images/baseline-edit-black-18/2x/baseline_edit_black_18dp.png"></a></button>
                         <!--delete-->
                         <form class="delete-form" th:action="@{'/deleteMovie?ID='+${movie.id}}" method="POST">
-                            <button><img src="https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-delete-black-18/2x/baseline_delete_black_18dp.png"></button>
+                            <button><img src="images/baseline-delete-black-18/2x/baseline_delete_black_18dp.png"></button>
                         </form>
                     </div>
                 </div>
@@ -275,11 +275,11 @@
     var collectionVM = new Vue({
         el: "#collection",
         data: {
-            favorite_icon_path: "https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-favorite-black-18/2x/baseline_favorite_black_18dp.png",
-            favorite_border_icon_path: "https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-favorite_border-black-18/2x/baseline_favorite_border_black_18dp.png",
+            favorite_icon_path: "images/baseline-favorite-black-18/2x/baseline_favorite_black_18dp.png",
+            favorite_border_icon_path: "images/baseline-favorite_border-black-18/2x/baseline_favorite_border_black_18dp.png",
 
             current_collect: false,
-            current_icon_path: "https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-favorite_border-black-18/2x/baseline_favorite_border_black_18dp.png"
+            current_icon_path: "images/baseline-favorite_border-black-18/2x/baseline_favorite_border_black_18dp.png"
         },
         mounted: function() {
             if($("#globalUserId").val() != null && $("#globalMovieId").val() != null) {
@@ -293,7 +293,7 @@
                     console.log(response);
                     if(response.data.umRelation != null && response.data.umRelation.collected == 1) {
                         this.current_collect = true;
-                        this.current_icon_path = "https://github.com/BearL222/Warehouse/raw/master/images/YelpForMovies/baseline-favorite-black-18/2x/baseline_favorite_black_18dp.png";
+                        this.current_icon_path = "images/baseline-favorite-black-18/2x/baseline_favorite_black_18dp.png";
                     }
                 })
                 .catch(error => {
