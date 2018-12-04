@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import uci.cs297p.common.Cnst;
 import uci.cs297p.common.ServerResponse;
 import uci.cs297p.model.Comment;
@@ -22,13 +24,17 @@ public class CommentController {
     private ICommentService commentService;
 
     @RequestMapping("add.do")
-    @ResponseBody
-    public ServerResponse<Comment> add(HttpSession session, Integer movieId, String content) {
+//    @ResponseBody
+    public RedirectView add(HttpSession session, Integer movieId, String content) {
         User user = (User) session.getAttribute(Cnst.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.succWithMsg("user not login!");
+        if (user != null) {
+            ServerResponse serverResponse = commentService.add(user.getId(), movieId, content);
+            if(serverResponse.isSucc()) {
+                return new RedirectView("/movieDetailPage?ID=" + movieId);
+            }
         }
-        return commentService.add(user.getId(), movieId, content);
+        return new RedirectView("/");
+//        return ServerResponse.succWithMsg("user not login!");
     }
 
     @RequestMapping("delete.do")
