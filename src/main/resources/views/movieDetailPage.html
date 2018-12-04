@@ -214,7 +214,7 @@
                         <!--delete your comment-->
                         <div class="row" th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getId() == userIdsOfCommentList[iterStat.index]}">
                             <div class="col-md-2 pull-right">
-                                <form class="delete-form" th:action="@{'/comment/delete.do?ID='+${comment.id}}" method="POST">
+                                <form class="delete-form" th:action="@{'/comment/delete.do?ID='+${comment.id} + '&movieId=' + ${comment.movieId}}" method="POST">
                                     <button class="btn btn-danger btn-sm">Delete</button>
                                 </form>
                             </div>

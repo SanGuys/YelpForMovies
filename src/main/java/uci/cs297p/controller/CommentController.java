@@ -38,13 +38,16 @@ public class CommentController {
     }
 
     @RequestMapping("delete.do")
-    @ResponseBody
-    public ServerResponse delete(HttpSession session, @RequestParam("ID") Integer commentId) {
+//    @ResponseBody
+    public RedirectView delete(HttpSession session, @RequestParam("ID") Integer commentId, @RequestParam("movieId") Integer movieId) {
         User user = (User) session.getAttribute(Cnst.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.succWithMsg("user not login!");
+        if (user != null) {
+            ServerResponse serverResponse = commentService.delete(user.getId(), commentId);
+            if (serverResponse.isSucc()) {
+                return new RedirectView("/movieDetailPage?ID=" + movieId);
+            }
         }
-        return commentService.delete(user.getId(), commentId);
+        return new RedirectView("/");
     }
 
     @RequestMapping("edit.do")
