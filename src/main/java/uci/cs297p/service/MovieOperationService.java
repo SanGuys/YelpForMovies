@@ -40,4 +40,8 @@ public class MovieOperationService {
         Movie movie = movieMapper.selectByPrimaryKey(ID);
         return movie;
     }
+
+    public List<Movie> getMovieListByRandom(int size) {
+        return movieMapper.selectByRandom(size);
+    }
 }

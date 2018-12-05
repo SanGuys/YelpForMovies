@@ -56,4 +56,6 @@ public interface MovieMapper {
      * @mbggenerated Sun Nov 18 20:31:56 PST 2018
      */
     int updateByPrimaryKey(Movie record);
+
+    List<Movie> selectByRandom(int size);
 }

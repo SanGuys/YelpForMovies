@@ -11,10 +11,7 @@ import uci.cs297p.service.IUserService;
 import uci.cs297p.service.MovieOperationService;
 import uci.cs297p.service.UserServiceImpl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class MovieOperationController {
@@ -27,9 +24,11 @@ public class MovieOperationController {
     @Autowired
     private IUserService userService;
 
+    private final static int DISPLAYLISTSIZE = 9;
+
     @RequestMapping("/")
     public String homepage(Model model){
-        List<Movie> movieList = movieOperationService.searchMovie("");
+        List<Movie> movieList = movieOperationService.getMovieListByRandom(DISPLAYLISTSIZE);
         model.addAttribute("movieList", movieList);
         return "homepage";
     }
