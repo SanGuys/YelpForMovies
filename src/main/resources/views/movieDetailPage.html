@@ -134,7 +134,7 @@
 <div class="container">
     <div class="row">
         <!--movie detail-->
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="thumbnail div-gap">
                 <div class="row">
                     <!--dummy col-->
@@ -178,7 +178,7 @@
                     <br>
                     <div class="row" th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getRole() == 1}">
                         <!--edit-->
-                        <button><a th:href="@{'/editMovie?ID='+${movie.id}}"><img src="images/baseline-edit-black-18/2x/baseline_edit_black_18dp.png"></a></button>
+                        <a th:href="@{'/editMovie?ID='+${movie.id}}"><button><img src="images/baseline-edit-black-18/2x/baseline_edit_black_18dp.png"></button></a>
                         <!--delete-->
                         <form class="delete-form" th:action="@{'/deleteMovie?ID='+${movie.id}}" method="POST">
                             <button><img src="images/baseline-delete-black-18/2x/baseline_delete_black_18dp.png"></button>
