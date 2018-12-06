@@ -1,7 +1,7 @@
 # YelpForMovies
 ## Team: SanGuys
 
-http://yelpformovies-env.ehgmbbwym4.us-west-1.elasticbeanstalk.com/
+http://tinyurl.com/yelpformovies
 
 Overview:
 Yelp for Movies is a web-based movie management and comment sharing system.  
