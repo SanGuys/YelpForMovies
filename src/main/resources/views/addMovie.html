@@ -1,34 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Let's add a movie!</title>
+    <script type="text/javascript">
+
+        function add() {
+            $.ajax({
+                type: "post",
+                url: "/addMovieSubmit",
+                dataType: "text",
+                data: {
+                    "name": $("#name").val(),
+                    "year": $("#year").val(),
+                    "introduction": $("#introduction").val(),
+                    "picturePath": $("#picturePath").val(),
+                    "rating": $("#rating").val(),
+                    "ratingNumber": $("#ratingNumber").val(),
+                },
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (data) {
+                    alert("Internal Error. Please contact admin");
+                }
+            });
+        }
+    </script>
 </head>
 <body>
-    <h1 align="center">Let's add a movie!</h1>
-    <div style="width: 30%; margin: 25px auto;">
-        <form align="center" action="/addMovieSubmit" method="post" th:object="${movieRecordForm}">
-            <div class="form-group">
-                <input class="form-control" type="text" name="name" placeholder="Name">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="text" name="year" placeholder="Year">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="text" name="introduction" placeholder="Introduction">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="text" name="picturePath" placeholder="Picture Path">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="text" name="pictureContent" placeholder="Picture Content">
-            </div>
-            <div class="form-group">
-                <button class="btn btn-lg btn-default btn-primary btn-block">Submit!</button>
-            </div>
-            <a href="/">Go back</a>
-        </form>
-    </div>
+<h1 align="center">Let's add a movie!</h1>
+<div style="width: 30%; margin: 25px auto;">
+    <form align="center">
+        <div class="form-group">
+            <input class="form-control" type="text" name="name" id="name" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="year" id="year" placeholder="Year">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="introduction" id="introduction" placeholder="Introduction">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="picturePath" id="picturePath" placeholder="Picture Path">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="rating" id="rating" placeholder="Rating Score">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="ratingNumber" id="ratingNumber" placeholder="Rating Number">
+        </div>
+        <div class="form-group">
+            <input type="button" class="btn btn-lg btn-default btn-primary btn-block" id="addMovieSubmit" onclick="add()" value="Submit!"/>
+        </div>
+        <a href="/">Go back</a>
+
+    </form>
+</div>
+
 </body>
+
 </html>

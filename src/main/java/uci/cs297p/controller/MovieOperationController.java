@@ -40,7 +40,7 @@ public class MovieOperationController {
         return "searchResult";
     }
 
-    @RequestMapping(value="/addMovie", method = RequestMethod.POST)
+    @RequestMapping(value="/addMovie")
     public String addMovie() {
         return "addMovie";
     }

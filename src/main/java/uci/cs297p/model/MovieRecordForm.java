@@ -4,13 +4,13 @@ import lombok.Data;
 
 @Data
 public class MovieRecordForm {
-    int id;
+    Integer id;
     String name;
-    int year;
+    Integer year;
     String introduction;
     String picturePath;
-    float rating;
-    int ratingNumber;
+    Float rating;
+    Integer ratingNumber;
 
     @Override
     public String toString() {
