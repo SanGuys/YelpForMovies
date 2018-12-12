@@ -20,7 +20,11 @@
         .div-gap {
             margin: 10px;
         }
-        .updateTime {
+        .div-top-margin {
+            margin-top: 10px;
+        }
+
+        .update-time {
             color: #777777;
             float: right;
         }
@@ -66,6 +70,15 @@
 
         .movie-profile-pic-box img {
             vertical-align: middle;
+        }
+
+        .grey-text {
+            color: #777777;
+        }
+
+        .rating-score {
+            font-size: x-large;
+            color: #f5de50;
         }
 
     </style>
@@ -144,46 +157,56 @@
                         <img class="img-responsive" th:src="${movie.picturePath}" alt="movie-profile-pic">
                     </div>
 
-                    <!--collection and rating-->
+                    <!--collection-->
                     <div class="col-md-4">
-                        <span th:text="'YelpForMovie Rating: ' + ${movie.getRating()}"></span>
-                        <div id="collection" th:if="${session.CURRENT_USER != null}">
-                            <!--collection button-->
-                            <img :src="current_icon_path" @click="handleSwitchClick">
-                        </div>
-                        <div id="rating" th:if="${session.CURRENT_USER != null}">
-                            <!--necessary userId-->
-                            <input hidden type="text" th:value="${session.CURRENT_USER.getId()}" id="globalUserId">
-
-                            <!--your rating-->
-                            <span>
-                                <select id="scoreInputId">
-                                    <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-                                </select>
-                            </span>
-                            <span>
-                                <button @click="handleBtnClick">Submit your score!</button>
-                            </span>
+                        <div class="grey-text">YelpForMovie Rating:</div>
+                        <div class="rating-score" th:text="${movie.getRating()} + '/10'"></div>
+                        <div class="grey-text">
+                            <span th:text="${movie.getRatingNumber()}"></span>
+                            <span> people have rated this movie</span>
                         </div>
                     </div>
                 </div>
 
-                <!--edit and delete buttons for admins-->
+                <!--rating-->
+                <div id="collection" th:if="${session.CURRENT_USER != null}">
+                    <!--collection button-->
+                    <div>Click to add it into your list</div>
+                    <img :src="current_icon_path" @click="handleSwitchClick">
+                </div>
+                <div id="rating" th:if="${session.CURRENT_USER != null}">
+                    <div>Rate the movie yourself!</div>
+                    <!--necessary userId-->
+                    <input hidden type="text" th:value="${session.CURRENT_USER.getId()}" id="globalUserId">
+
+                    <!--your rating-->
+                    <div>
+                        <select id="scoreInputId">
+                            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+                        </select>
+                    </div>
+                    <div class="div-top-margin">
+                        <button type="button" class="btn btn-primary btn-sm" @click="handleBtnClick">Submit</button>
+                    </div>
+                </div>
+
+                <!--movie info-->
                 <div class="caption-full">
-                    <br>
                     <br>
                     <h3 align="left"><strong th:text="${movie.name} + ' ('+${movie.year}+')'"></strong></h3>
                     <br>
                     <p th:text="${movie.introduction}"></p>
                     <br>
-                    <div class="row" th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getRole() == 1}">
-                        <!--edit-->
-                        <a th:href="@{'/editMovie?ID='+${movie.id}}"><button><img src="images/baseline-edit-black-18/2x/baseline_edit_black_18dp.png"></button></a>
-                        <!--delete-->
-                        <form class="delete-form" th:action="@{'/deleteMovie?ID='+${movie.id}}" method="POST">
-                            <button><img src="images/baseline-delete-black-18/2x/baseline_delete_black_18dp.png"></button>
-                        </form>
-                    </div>
+                </div>
+
+                <!--edit and delete buttons for admins-->
+                <div th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getRole() == 1}">
+                    <!--edit-->
+                    <a th:href="@{'/editMovie?ID='+${movie.id}}"><button><img src="images/baseline-edit-black-18/2x/baseline_edit_black_18dp.png"></button></a>
+                    <!--delete-->
+                    <form class="div-top-margin delete-form" th:action="@{'/deleteMovie?ID='+${movie.id}}" method="POST">
+                        <button><img src="images/baseline-delete-black-18/2x/baseline_delete_black_18dp.png"></button>
+                    </form>
                 </div>
             </div>
 
@@ -193,7 +216,7 @@
             </div>
 
             <!--comment part-->
-            <div class="jumbotron div-gap">
+            <div id="commenting" class="jumbotron div-gap">
                 <!--add a comment-->
                 <div class="text-right div-gap" th:if="${session.CURRENT_USER != null}">
                     <form title="Comment" action="/comment/add.do" method="post">
@@ -213,8 +236,9 @@
                         <hr>
                         <!--show username, comment and update time-->
                         <strong th:text="${userNamesOfCommentList[iterStat.index]}"></strong>
-                        <span class="updateTime" th:text="'Update time: ' + ${comment.updateTime}"></span>
-                        <p class="comment-content" th:utext='${#strings.replace(comment.content,"&#10;", "&lt;br&gt;")}'></p>
+                        <span class="update-time" th:text="'Update time: ' + ${comment.updateTime}"></span>
+                        <p id="commentContent" class="comment-content" th:utext='${#strings.replace(comment.content,"&#10;", "&lt;br&gt;")}'></p>
+                        <!--<span @click="handleReplyClick"><u>Reply</u></span>-->
 
                         <!--delete your comment-->
                         <div class="row" th:if="${session.CURRENT_USER != null && session.CURRENT_USER.getId() == userIdsOfCommentList[iterStat.index]}">
@@ -245,6 +269,17 @@
 
 
 <script>
+    var commentVM = new Vue({
+        el: "#commenting",
+        methods: {
+            handleReplyClick: function() {
+                alert('test');
+                document.getElementById('userInput').value="new value";
+            }
+        }
+    });
+
+
     var ratingVM = new Vue({
         el: "#rating",
         methods: {
