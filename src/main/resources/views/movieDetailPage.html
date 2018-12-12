@@ -187,6 +187,11 @@
                 </div>
             </div>
 
+            <div class="container table-responsive" style="padding-top: 50px;">
+                <p><a th:utext="'Search &quot;' + ${movie.name} + '&quot; on IMDB'" th:href="'https://www.imdb.com/find?q=' + ${movie.name}"></a></p>
+                <p><a th:utext="'Search &quot;' + ${movie.name} + '&quot; on Amazon'" th:href="'https://www.amazon.com/s/search-alias%3Dmovies-tv&field-keywords=' + ${movie.name}"></a></p>
+            </div>
+
             <!--comment part-->
             <div class="jumbotron div-gap">
                 <!--add a comment-->

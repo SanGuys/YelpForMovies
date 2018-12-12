@@ -37,6 +37,7 @@ public class MovieOperationController {
     public String searchMovie(String keyWords, Model model){
         List<Movie> movieList = movieOperationService.searchMovie(keyWords);
         model.addAttribute("movieList", movieList);
+        model.addAttribute("keyWords", keyWords);
         return "searchResult";
     }
 

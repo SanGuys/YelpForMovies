@@ -102,13 +102,17 @@
     <form class="form" action="/searchMovie" method="post">
         <div class="input-group">
             <label for="keyWords"></label>
-            <input type="text" class="form-control mr-sm-5" id="keyWords" name="keyWords" placeholder="Try &quot;Bumblebee&quot;" required="required" pattern="[a-zA-Z0-9]+" oninvalid="setCustomValidity('What would you like to search?')" oninput="setCustomValidity('')">
+            <input type="text" class="form-control mr-sm-5" id="keyWords" name="keyWords" th:value="${keyWords}" required="required" pattern=".*[a-zA-Z0-9]+.*" oninvalid="setCustomValidity('What would you like to search?')" oninput="setCustomValidity('')">
             <span class="input-group-btn">
                 <label for="searchButton"></label>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchButton">Search</button>
             </span>
         </div>
     </form>
+</div>
+
+<div class="container table-responsive" style="padding-top: 50px;">
+    <a th:text="'Not satisfied with the result?  Search &quot;' + ${keyWords} + '&quot; on IMDB'" th:href="'https://www.imdb.com/find?q=' + ${keyWords}"></a>
 </div>
 
 <div class="container table-responsive" style="padding-top: 50px;">
