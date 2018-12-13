@@ -92,8 +92,8 @@ with open(tids) as r, open(movies, 'w', newline = '') as w:
             print(tid + " success")
             num_success += 1
         realname, year, sumtext, imgurl, rating = getInfo(tid)
-        l = [tid, realname, year, sumtext, imgurl, rating, '1']
-        writer.writerow(l)
+        movie = [tid, realname, year, sumtext, imgurl, rating, '1']
+        writer.writerow(movie)
 
 
 # summary
