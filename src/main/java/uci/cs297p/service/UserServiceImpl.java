@@ -219,7 +219,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ServerResponse<UMRelation> updateRating(UMRelationKey key, Integer score) {
         UMRelation recordInDB = umRelationMapper.selectByPrimaryKey(key);
-        Movie movie = movieMapper.selectByPrimaryKey(recordInDB.getMovieId());
+        Movie movie = movieMapper.selectByPrimaryKey(key.getMovieId());
         if(movie != null) {
             boolean flag = false;
             float total = movie.getRating() * movie.getRatingNumber();
